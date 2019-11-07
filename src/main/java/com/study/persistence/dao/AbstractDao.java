@@ -1,6 +1,5 @@
-package com.study.dao;
+package com.study.persistence.dao;
 
-import com.study.entity.Conference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,7 +47,7 @@ public abstract class AbstractDao<T> implements CRUDInterface<T> {
 //        }
 //        return id;
 //    }
-//
+
     public boolean createUpdate(String query, StatementMapper statementMapper){
         try(PreparedStatement preparedStatement = DataSourceFactory.getPreparedStatement(query)) {
             statementMapper.map(preparedStatement);

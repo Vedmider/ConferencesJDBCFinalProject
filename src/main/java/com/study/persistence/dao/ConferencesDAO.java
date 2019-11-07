@@ -1,6 +1,6 @@
-package com.study.dao;
+package com.study.persistence.dao;
 
-import com.study.entity.Conference;
+import com.study.persistence.entity.Conference;
 
 import java.util.List;
 

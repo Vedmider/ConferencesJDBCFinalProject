@@ -1,7 +1,7 @@
 package com.study.servlet;
 
 
-import com.study.dao.ConferencesDAO;
+import com.study.persistence.dao.ConferencesDAO;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

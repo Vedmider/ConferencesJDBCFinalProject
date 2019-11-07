@@ -1,4 +1,4 @@
-package com.study.dao;
+package com.study.persistence.dao;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.slf4j.Logger;

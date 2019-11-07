@@ -4,7 +4,7 @@ create table user_role (id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 						role_name varchar(255) NOT NULL);
 create table rights (id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 					right_title varchar(255) NOT NULL);
-create table role_rigths_relation (role_id int NOT NULL,
+create table role_rights_relation (role_id int NOT NULL,
 									right_id int NOT NULL,
                                     CONSTRAINT unique_role_right UNIQUE (role_id, right_id));
 
