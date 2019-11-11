@@ -23,7 +23,7 @@ create table speaker (user_id int NOT NULL UNIQUE,
 create table conferences (id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 							theme varchar(255) NOT NULL,
                             date_time_planned datetime NOT NULL,
-                            date_time_happened datetime NOT NULL,
+                            date_time_happened datetime,
                             address varchar(255));
 create table reports (id int AUTO_INCREMENT PRIMARY KEY,
 						title varchar(255) NOT NULL,

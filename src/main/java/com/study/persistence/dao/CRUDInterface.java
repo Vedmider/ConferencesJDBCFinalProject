@@ -1,12 +1,16 @@
-package com.dao;
+package com.study.persistence.dao;
 
 import java.util.List;
 
 public interface CRUDInterface<T> {
 
+    T getById(int id);
+
     List<T> getAll();
 
-    boolean create(T entity);
+    List<T> getAllConditional(String query, EntityMapper<T> mapper);
+
+    int create(T entity);
 
     boolean update(T entity);
 

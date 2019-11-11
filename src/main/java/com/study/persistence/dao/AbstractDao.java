@@ -9,15 +9,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dao.CRUDInterface;
-import com.dao.StatementMapper;
-
 public abstract class AbstractDao<T> implements CRUDInterface<T> {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractDao.class);
 
     protected static final String COLUMN_ID = "id";
 
-    public List<T> getAll(String query, EntityMapper<T> mapper) {
+    public List<T> selectFromDB(String query, EntityMapper<T> mapper) {
         List<T> result = new ArrayList<>();
 
         try (PreparedStatement preparedStatement = DataSourceFactory.getPreparedStatement(query);
@@ -36,34 +33,23 @@ public abstract class AbstractDao<T> implements CRUDInterface<T> {
         return result;
     }
 
-//    public int getPrototypeId(T entity) {
-//        int id = 0;
-//        try (PreparedStatement preparedStatement = DataSourceFactory.getPreparedStatement(String selectFromDB)) {
-//            preparedStatement.setString(1, entity.getName());
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            id = resultSet.getInt(COLUMN_ID);
-//        } catch (SQLException e) {
-//            LOG.error("Exception while getting all entities");
-//        }
-//        return id;
-//    }
 
-    public boolean createUpdate(String query, StatementMapper statementMapper){
-        try(PreparedStatement preparedStatement = DataSourceFactory.getPreparedStatement(query)) {
+    public boolean update(String query, StatementMapper statementMapper) {
+        try (PreparedStatement preparedStatement = DataSourceFactory.getPreparedStatement(query)) {
             statementMapper.map(preparedStatement);
 
             int result = preparedStatement.executeUpdate();
 
             return result == 1;
         } catch (SQLException e) {
-            LOG.error("Could not create entity!!", e);
+            LOG.error("Could not update or delete entity !!!", e);
         }
 
         return false;
     }
 
-    public int countRows(String query, StatementMapper statementMapper){
-        try(PreparedStatement preparedStatement = DataSourceFactory.getPreparedStatement(query)) {
+    public int countRows(String query, StatementMapper statementMapper) {
+        try (PreparedStatement preparedStatement = DataSourceFactory.getPreparedStatement(query)) {
             statementMapper.map(preparedStatement);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -74,6 +60,22 @@ public abstract class AbstractDao<T> implements CRUDInterface<T> {
         }
 
         return 0;
+    }
+
+    public int create(String query, StatementMapper statementMapper) {
+        int result = -1;
+        try (PreparedStatement preparedStatement = DataSourceFactory.getPreparedStatement(query)) {
+            statementMapper.map(preparedStatement);
+            preparedStatement.executeUpdate();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+
+            while (resultSet.next()) {
+                result = resultSet.getInt("id");
+            }
+        } catch (SQLException e) {
+            LOG.error("Could not create entity!!", e);
+        }
+        return result;
     }
 
 }

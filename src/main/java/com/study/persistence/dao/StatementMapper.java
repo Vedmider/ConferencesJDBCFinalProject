@@ -1,4 +1,4 @@
-package com.dao;
+package com.study.persistence.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

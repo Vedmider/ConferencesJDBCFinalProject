@@ -27,5 +27,6 @@ public class Speaker extends User {
 
     public void setUserId(int userId) {
         this.userId = userId;
+        super.setId(userId);
     }
 }
