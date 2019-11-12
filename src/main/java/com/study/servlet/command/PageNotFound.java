@@ -1,4 +1,12 @@
 package com.study.servlet.command;
 
-public class PageNotFound {
+import com.study.servlet.data.Page;
+
+import javax.servlet.http.HttpServletRequest;
+
+public class PageNotFound implements Command {
+    @Override
+    public Page perform(HttpServletRequest request) {
+        return null;
+    }
 }

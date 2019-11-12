@@ -1,7 +1,7 @@
 package com.study.servlet;
 
 
-import com.study.persistence.dao.ConferencesDAO;
+import com.study.persistence.dao.ConferenceDAO;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +13,7 @@ public class CountConferencesRowsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        ConferencesDAO conferencesDAO = new ConferencesDAO();
+        ConferenceDAO conferencesDAO = new ConferenceDAO();
         int numberOfRows = conferencesDAO.count();
 
         PrintWriter out = resp.getWriter();

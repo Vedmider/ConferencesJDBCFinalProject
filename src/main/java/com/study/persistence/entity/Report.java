@@ -4,8 +4,8 @@ import java.time.LocalTime;
 
 public class Report {
     private int id;
-    private String title;
-    private LocalTime timeStart;
+    private String title = "";
+    private LocalTime timeStart = LocalTime.of(00,00);
     private int speakerId;
     private int conferenceId;
     private int registered;
