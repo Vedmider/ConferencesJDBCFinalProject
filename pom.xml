@@ -50,6 +50,7 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>${servlet.api}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -62,7 +63,8 @@
                 <version>2.2</version>
                 <configuration>
                     <port>8888</port>
-                    <path>/conference</path>
+                    <path>/conferences</path>
+                    <ignorePackaging>true</ignorePackaging>
                 </configuration>
                 <dependencies>
                     <dependency>

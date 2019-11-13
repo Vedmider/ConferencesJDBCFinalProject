@@ -10,7 +10,7 @@ public class CommandFactory {
 
 
     static {
-        getCommandMap.put("conferences", new ConferencesCommand());
+        getCommandMap.put("/conferences", new ConferencesCommand());
     }
 
     private CommandFactory() {

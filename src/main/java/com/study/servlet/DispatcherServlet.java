@@ -19,11 +19,13 @@ public class DispatcherServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        LOG.info("Processing doGet Method in dispatcher servlet. Path URI - {}, URL - {}, contextPath {}", req.getRequestURI(), req.getRequestURL(), req.getContextPath());
         processRequest(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        LOG.info("Processing doPost Method in dispatcher servlet. Path URI - {}, URL - {}, contextPath {}", req.getRequestURI(), req.getRequestURL(), req.getContextPath());
         processRequest(req, resp);
     }
 
@@ -35,8 +37,10 @@ public class DispatcherServlet extends HttpServlet {
         Page page = command.perform(req);
 
         if (page.isRedirect()) {
+            LOG.info("Redirect to page URL {}", page.getUrl());
             resp.sendRedirect(page.getUrl());
         } else {
+            LOG.info("Forward to page URL {}", page.getUrl());
             req.getRequestDispatcher(page.getUrl()).forward(req, resp);
         }
     }
@@ -44,7 +48,7 @@ public class DispatcherServlet extends HttpServlet {
     private String getPath(HttpServletRequest req) {
         String requestUri = req.getRequestURI();
         int lastPath = requestUri.lastIndexOf('/');
-        String path = requestUri.substring(lastPath + 1);
+        String path = requestUri.substring(lastPath);
         LOG.info("Path: " + path);
         return path;
     }
