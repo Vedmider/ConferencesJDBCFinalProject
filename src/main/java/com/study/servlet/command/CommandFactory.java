@@ -11,6 +11,7 @@ public class CommandFactory {
 
     static {
         getCommandMap.put("/conferences", new ConferencesCommand());
+        getCommandMap.put("/forbidden", new ForbiddenCommand());
     }
 
     private CommandFactory() {

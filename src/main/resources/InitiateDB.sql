@@ -37,8 +37,8 @@ create table reports (id int AUTO_INCREMENT PRIMARY KEY,
 
 insert  into user_role (role_name) values ('ADMIN'), ('ANONYMOUS'), ('MODERATOR'), ('SPEAKER'), ('USER');
 insert into rights (right_title) values ('EDIT USER'), ('DELETE USER'), ('CREATE REPORT'), ('EDIT REPORT'), ('CREATE CONFERENCE'), ('EDIT CONFERENCE'), ('DELETE CONFERENCE');
-ALTER TABLE  role_rigths_relation ADD CONSTRAINT role_fk FOREIGN KEY (role_id) REFERENCES user_role(id), ADD CONSTRAINT rights_fk FOREIGN KEY (right_id) REFERENCES rights(id);
-insert into role_rigths_relation values (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (3, 3), (3, 4), (4, 4);
+ALTER TABLE  role_rights_relation ADD CONSTRAINT role_fk FOREIGN KEY (role_id) REFERENCES user_role(id), ADD CONSTRAINT rights_fk FOREIGN KEY (right_id) REFERENCES rights(id);
+insert into role_rights_relation values (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (3, 3), (3, 4), (4, 4);
 insert into users (login, user_password, first_name, last_name, email, user_role)
     values ('user', '12345', 'Mart', 'Poom', 'Poom@gmail.com', 5),
        ('referee', '12345', 'Howard', 'Webb', 'HowardWeb@gmail.com', 3),

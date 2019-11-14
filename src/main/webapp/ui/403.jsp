@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>404 HTML</title>
+	<title>403 HTML</title>
 
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:700,900" rel="stylesheet">
@@ -29,10 +29,10 @@
 	<div id="notfound">
 		<div class="notfound">
 			<div class="notfound-404">
-				<h1>404</h1>
-				<h2>Page not found</h2>
+				<h1>403</h1>
+				<h2>Forbidden! You are not allowed to enter this page</h2>
 			</div>
-			<a href="#">Homepage</a>
+			<a href="${pageContext.request.contextPath}/">Homepage</a>
 		</div>
 	</div>
 
