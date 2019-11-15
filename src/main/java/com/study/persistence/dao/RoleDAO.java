@@ -15,7 +15,7 @@ public class RoleDAO extends AbstractDao<Role> {
     private static final String DELETE_USER_ROLE = "DELETE FROM user_role WHERE id = ?";
     private static final String SELECT_USER_ROLE = "SELECT * from user_role WHERE id = ";
     private static final String SELECT_USER_ROLE_RIGHTS = "SELECT r.id as id, r.right_title as title " +
-            "FROM role_rigths_relation as relation " +
+            "FROM role_rights_relation as relation " +
             "JOIN rights r on relation.right_id = r.id " +
             "WHERE relation.right_id = ";
     private RightDAO rightDAO = new RightDAO();

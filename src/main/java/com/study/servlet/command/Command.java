@@ -1,4 +1,9 @@
 package com.study.servlet.command;
 
-public class Command {
+import com.study.servlet.data.Page;
+
+import javax.servlet.http.HttpServletRequest;
+
+public interface Command {
+    Page perform(HttpServletRequest request);
 }
