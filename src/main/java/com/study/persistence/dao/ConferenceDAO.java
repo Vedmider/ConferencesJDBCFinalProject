@@ -61,11 +61,19 @@ public class ConferenceDAO extends AbstractDao<Conference> {
 
     @Override
     public boolean update(Conference entity) {
-        return false;
+        return update(UPDATE_CONFERENCES, preparedStatement -> {
+            preparedStatement.setString(1, entity.getTheme());
+            preparedStatement.setObject(2, entity.getPlannedDateTime());
+            preparedStatement.setObject(3, entity.getPlannedDateTime());
+            preparedStatement.setString(4, entity.getAddress());
+            preparedStatement.setInt(5, entity.getId());
+        });
     }
 
     @Override
     public boolean delete(Conference entity) {
-        return false;
+        return update(DELETE_FROM_CONFERENCES, preparedStatement -> {
+            preparedStatement.setInt(1, entity.getId());
+        });
     }
 }

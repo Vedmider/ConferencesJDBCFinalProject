@@ -14,7 +14,7 @@ public class CountConferencesRowsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         ConferenceDAO conferencesDAO = new ConferenceDAO();
-        int numberOfRows = conferencesDAO.count();
+        long numberOfRows = conferencesDAO.getAll().stream().count();
 
         PrintWriter out = resp.getWriter();
         out.print("<h1>Table Conferences has </h1> " + numberOfRows + "  records in it");

@@ -1,7 +1,13 @@
 <!doctype html>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false" %>
+<fmt:setBundle basename="message"/>
 
-<html lang="en">
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="${sessionScope.bundle}"/>
+
+<html lang="${sessionScope.locale}">
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -31,7 +37,9 @@
             <div class="banner_inner">
 				<div class="container">
 					<div class="banner_content">
-						<h2>Manage all conferences events</h2>
+						<h2>
+							<fmt:message key="index.home.banner.area"/>
+						</h2>
 					</div>
 				</div>
             </div>
@@ -85,17 +93,6 @@
         	</div>
         </section>
         <!--================End Team Area =================-->
-
-        <section class="home_map_area">
-        	<div id="mapBox2" class="mapBox2" 
-				data-lat="40.701083" 
-				data-lon="-74.1522848" 
-				data-zoom="13" 
-				data-info="PO Box CT16122 Collins Street West, Victoria 8007, Australia."
-				data-mlat="40.701083"
-				data-mlon="-74.1522848">
-			</div>
-
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="ui/js/jquery-3.2.1.min.js"></script>

@@ -1,5 +1,8 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="${bundle}"/>
 <html>
 <head>
     <base href="${pageContext.request.contextPath}/">
@@ -39,6 +42,14 @@
                             </ul>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                        <li class="nav-item submenu dropdown">
+                            <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Locale</a>
+                            <ul class="dropdown-menu" >
+                                <li class="nav-item"><a href="?sessionLocale=en" class="nav-link"><fmt:message key="header.locale.en" /></a></li>
+                                <li class="nav-item"><a href="?sessionLocale=de" class="nav-link"><fmt:message key="header.locale.de" /></a></li>
+                                <li class="nav-item"><a href="?sessionLocale=fr" class="nav-link"><fmt:message key="header.locale.fr" /></a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
