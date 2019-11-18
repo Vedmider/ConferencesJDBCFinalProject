@@ -8,5 +8,5 @@ Functionality:
 Anonymous users have acces only to index page with login.
 SPEAKERS AND USERS have acces to pages with conferences and reports 
 MODERATOR users can update/
-
 There are different levels of access to application pages based on users role.
+All this logic will be managed by Manager class.
