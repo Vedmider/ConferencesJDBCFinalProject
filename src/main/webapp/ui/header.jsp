@@ -41,7 +41,8 @@
                                 <li class="nav-item"><a class="nav-link" href="single-blog.html">Blog Details</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="login">Log in</a></li>
+                        <li class="nav-item"><a class="nav-link" href="logout">Log out</a></li>
                         <li class="nav-item submenu dropdown">
                             <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Locale</a>
                             <ul class="dropdown-menu" >

@@ -3,6 +3,8 @@ package com.study.servlet.command;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.study.servlet.constant.PathConstants.*;
+
 public class CommandFactory {
     private static Map<String, Command> getCommandMap = new HashMap<>();
     private static Map<String, Command> postCommandMap = new HashMap<>();
@@ -10,8 +12,10 @@ public class CommandFactory {
 
 
     static {
-        getCommandMap.put("/conferences", new ConferencesCommand());
-        getCommandMap.put("/forbidden", new ForbiddenCommand());
+        getCommandMap.put(SLASH_INDEX, new ConferencesCommand());
+        getCommandMap.put(SLASH_FORBIDDEN, new ForbiddenCommand());
+        getCommandMap.put(SLASH_LOGOUT, new LogOutCommand());
+        getCommandMap.put(SLASH_LOGIN, new LogInCommand());
     }
 
     private CommandFactory() {
