@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context debug="true" reloadable="true" crossContext="true"
+         antiJARLocking="true">
+
+<Resource name="jdbc/myDB"
+          auth="Container"
+          type="javax.sql.DataSource"
+          maxTotal="100"
+          maxIdle="30"
+          maxWaitMillis="10000"
+          username="mysql"
+          password="12345"
+          driverClassName="com.mysql.jdbc.Driver"
+          url="jdbc:mysql://localhost:3306/conferences?serverTimezone=UTC"/>
+</Context>

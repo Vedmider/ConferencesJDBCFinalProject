@@ -11,6 +11,6 @@ public class LogOutCommand implements Command {
     @Override
     public Page perform(HttpServletRequest request) {
         request.getSession().invalidate();
-        return new Page(request.getContextPath() + SLASH_INDEX, true);
+        return new Page( SLASH_INDEX, true);
     }
 }

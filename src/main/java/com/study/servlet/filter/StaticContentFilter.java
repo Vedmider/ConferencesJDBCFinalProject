@@ -9,11 +9,13 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 import static com.study.servlet.constant.PathConstants.*;
 
+@WebFilter(filterName = "StaticContentFilter", urlPatterns = {ROOT_FILTER_URL})
 public class StaticContentFilter implements Filter {
     private static final Logger LOG = LoggerFactory.getLogger(StaticContentFilter.class);
 
@@ -42,7 +44,7 @@ public class StaticContentFilter implements Filter {
     }
 
     private boolean shouldBeSkipped(String path) {
-        return path.startsWith(RESOURCES_PATH) || path.startsWith(UI_PATH) || path.startsWith(APP_PATH);
+        return path.startsWith(RESOURCES_PATH) || path.startsWith(UI_PATH) || path.startsWith(APP_PATH) || path.startsWith(IMG_PATH);
     }
 
     @Override

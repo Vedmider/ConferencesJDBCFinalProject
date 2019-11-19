@@ -38,7 +38,7 @@ public class DispatcherServlet extends HttpServlet {
 
         if (page.isRedirect()) {
             LOG.info("Redirect to page URL {}", page.getUrl());
-            resp.sendRedirect(page.getUrl());
+            resp.sendRedirect(req.getContextPath() + page.getUrl());
         } else {
             LOG.info("Forward to page URL {}", page.getUrl());
             req.getRequestDispatcher(page.getUrl()).forward(req, resp);

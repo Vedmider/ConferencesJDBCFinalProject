@@ -16,6 +16,8 @@ public class CommandFactory {
         getCommandMap.put(SLASH_FORBIDDEN, new ForbiddenCommand());
         getCommandMap.put(SLASH_LOGOUT, new LogOutCommand());
         getCommandMap.put(SLASH_LOGIN, new LogInCommand());
+        getCommandMap.put(SLASH, new ConferencesCommand());
+        postCommandMap.put(SLASH_LOGIN, new PostLogInCommand());
     }
 
     private CommandFactory() {

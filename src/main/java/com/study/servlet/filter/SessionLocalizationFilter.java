@@ -28,6 +28,7 @@ public class SessionLocalizationFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         this.defaultLocale = filterConfig.getInitParameter(LOCALE);
         this.defaultBundle = filterConfig.getInitParameter(BUNDLE);
+        LOG.info("defaultLocale: {}; defaultBundle: {}", defaultLocale, defaultBundle);
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -36,13 +37,13 @@ public class SessionLocalizationFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpSession session = httpServletRequest.getSession();
 
-        LOG.info("Setting locale and bundle attribute to session");
         if (httpServletRequest.getParameter("sessionLocale") != null) {
+            LOG.info("Setting locale and bundle attribute to session. Set locale: {}", httpServletRequest.getParameter("sessionLocale"));
             session.setAttribute(LOCALE, httpServletRequest.getParameter("sessionLocale"));
         } else {
             setLocale(session);
-            setBundle(session);
         }
+        setBundle(session);
 
         chain.doFilter(request, response);
     }
@@ -52,15 +53,16 @@ public class SessionLocalizationFilter implements Filter {
     private void setLocale(HttpSession session) {
         String locale = (String) session.getAttribute(LOCALE);
         if (locale == null) {
-            LOG.info("Set locale to session");
+            LOG.info("Set locale to session to default: {}", defaultLocale);
             session.setAttribute(LOCALE, defaultLocale);
+
         }
     }
 
     private void setBundle(HttpSession session) {
         String bundle = (String) session.getAttribute(BUNDLE);
         if (bundle == null) {
-            LOG.info("Set bundle to session");
+            LOG.info("Set bundle to session to default: {}", defaultBundle);
             session.setAttribute(BUNDLE, defaultBundle);
         }
     }

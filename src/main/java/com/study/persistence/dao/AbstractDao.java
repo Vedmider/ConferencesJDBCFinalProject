@@ -27,7 +27,7 @@ public abstract class AbstractDao<T> implements CRUDInterface<T> {
             }
 
         } catch (SQLException e) {
-            LOG.error("Exception while getting all entities");
+            LOG.error("Exception while getting all entities", e);
         }
 
         return result;

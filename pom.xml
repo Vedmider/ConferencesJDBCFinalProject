@@ -71,6 +71,7 @@
                     <port>8888</port>
                     <path>/conferences</path>
                     <ignorePackaging>true</ignorePackaging>
+                    <contextFile>${project.build.directory}/${project.build.finalName}/WEB-INF/context.xml</contextFile>
                 </configuration>
                 <dependencies>
                     <dependency>
