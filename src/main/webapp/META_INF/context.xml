@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context debug="true" reloadable="true" crossContext="true"
-         antiJARLocking="true">
-
+<Context debug="true" reloadable="true" crossContext="true">
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
 <Resource name="jdbc/myDB"
           auth="Container"
           type="javax.sql.DataSource"
@@ -11,5 +10,9 @@
           username="mysql"
           password="12345"
           driverClassName="com.mysql.jdbc.Driver"
-          url="jdbc:mysql://localhost:3306/conferences?serverTimezone=UTC"/>
+          url="jdbc:mysql://localhost:3306/conferences?serverTimezone=UTC"
+          logAbandoned="true"
+          removeAbandoned="true"
+          removeAbandonedTimeout="60"
+          />
 </Context>

@@ -2,10 +2,10 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
-<fmt:setBundle basename="message"/>
+<%@ page session="true" %>
 
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="${sessionScope.bundle}"/>
+<fmt:setBundle basename="${cookie['bundle'].value}"/>
 
 <html lang="${sessionScope.locale}">
     <head>

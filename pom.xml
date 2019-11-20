@@ -41,12 +41,6 @@
             <artifactId>logback-classic</artifactId>
             <version>${logback}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql}</version>
-        </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
@@ -71,7 +65,7 @@
                     <port>8888</port>
                     <path>/conferences</path>
                     <ignorePackaging>true</ignorePackaging>
-                    <contextFile>${project.build.directory}/${project.build.finalName}/WEB-INF/context.xml</contextFile>
+                    <contextFile>${project.basedir}/src/main/webapp/META-INF/context.xml</contextFile>
                 </configuration>
                 <dependencies>
                     <dependency>

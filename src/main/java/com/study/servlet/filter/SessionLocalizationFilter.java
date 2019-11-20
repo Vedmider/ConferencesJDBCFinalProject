@@ -7,7 +7,9 @@ import javax.servlet.FilterConfig;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
@@ -36,6 +38,7 @@ public class SessionLocalizationFilter implements Filter {
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpSession session = httpServletRequest.getSession();
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
         if (httpServletRequest.getParameter("sessionLocale") != null) {
             LOG.info("Setting locale and bundle attribute to session. Set locale: {}", httpServletRequest.getParameter("sessionLocale"));
@@ -44,6 +47,8 @@ public class SessionLocalizationFilter implements Filter {
             setLocale(session);
         }
         setBundle(session);
+        Cookie cookie = new Cookie(BUNDLE, defaultBundle);
+        httpServletResponse.addCookie(cookie);
 
         chain.doFilter(request, response);
     }

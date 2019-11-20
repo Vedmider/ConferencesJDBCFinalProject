@@ -1,10 +1,13 @@
 <%@ page import="java.util.Enumeration" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page isELIgnored="false" %>
+<%@ page session="true" %>
+
+
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="${sessionScope.bundle}"/>
+<fmt:setBundle basename="${cookie['bundle'].value}"/>
 
 <html>
 <head>
@@ -15,7 +18,7 @@ Session scope <c:out value="${sessionScope.get(locale)}"/>
 simple value <c:out value="${locale}"/>
 
 Session scope <c:out value="${sessionScope.get(bundle)}"/>
-simple value <c:out value="${bundle}"/>
+simple value <c:out value="${cookie['bundle'].value}"/>
 <header class="header_area">
     <div class="main_menu">
         <nav class="navbar navbar-expand-lg navbar-light">
