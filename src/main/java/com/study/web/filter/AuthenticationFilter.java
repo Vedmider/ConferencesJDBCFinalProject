@@ -1,21 +1,19 @@
-package com.study.servlet.filter;
+package com.study.web.filter;
 
 import com.study.persistence.DTO.UserDTO;
-import com.study.servlet.config.SecurityConfig;
+import com.study.web.config.SecurityConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static com.study.servlet.constant.PathConstants.FORBIDDEN_PAGE;
-import static com.study.servlet.constant.PathConstants.SLASH_LOGIN;
+import static com.study.web.constant.PathConstants.FORBIDDEN_PAGE;
+import static com.study.web.constant.PathConstants.SLASH_LOGIN;
 
-@WebFilter("/*")
 public class AuthenticationFilter implements Filter {
     private static final Logger LOG = LoggerFactory.getLogger(AuthenticationFilter.class);
 

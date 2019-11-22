@@ -1,10 +1,10 @@
-package com.study.servlet.command;
+package com.study.web.command;
 
-import com.study.servlet.data.Page;
+import com.study.web.data.Page;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static com.study.servlet.constant.PathConstants.FORBIDDEN_PAGE;
+import static com.study.web.constant.PathConstants.FORBIDDEN_PAGE;
 
 public class ForbiddenCommand implements Command {
     @Override

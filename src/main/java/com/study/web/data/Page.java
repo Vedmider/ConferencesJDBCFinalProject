@@ -1,4 +1,4 @@
-package com.study.servlet.data;
+package com.study.web.data;
 
 public class Page {
     private String url;

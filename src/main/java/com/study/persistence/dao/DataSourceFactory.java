@@ -24,29 +24,14 @@ public class DataSourceFactory {
 
     }
 
-//    static {
-//        Properties properties = new Properties();
-//        try {
-//            properties.load(DataSourceFactory.class.getResourceAsStream(DB_FILE));
-//            MysqlDataSource mysqlDataSource = new MysqlDataSource();
-//            mysqlDataSource.setUrl(properties.getProperty("DB_URL"));
-//            mysqlDataSource.setDatabaseName(properties.getProperty("DB_NAME"));
-//            // mysqlDataSource.setCharacterEncoding(properties.getProperty(DB_CHARACTER_ENCODING));
-//            mysqlDataSource.setUser(properties.getProperty("DB_USERNAME"));
-//            mysqlDataSource.setPassword(properties.getProperty("DB_PASSWORD"));
-//            dataSource = mysqlDataSource;
-//            LOG.info("DataSource created: " + dataSource);
-//        } catch (IOException e) {
-//            LOG.error("Error while reading properties from file!", e);
-//        }
-//    }
-
     static{
         try {
             context = new InitialContext();
             dataSource = (DataSource) context.lookup("java:/comp/env/jdbc/myDB");
+            LOG.info("Data source : " + dataSource.toString());
+
         } catch (NamingException e) {
-            e.printStackTrace();
+            LOG.error("Could not get datasource", e);
         }
     }
 
@@ -57,11 +42,7 @@ public class DataSourceFactory {
         } catch (SQLException e) {
             LOG.error("Error while connection creation", e);
         }
-//        try {
-//            connection = dataSource.getConnection();
-//        } catch (SQLException e) {
-//            LOG.error("Error while connection creation", e);
-//        }
+
 
 
         return connection;

@@ -1,4 +1,4 @@
-package com.study.servlet.constant;
+package com.study.web.constant;
 
 public class ContentConstants {
     public static final String UTF_8 = "UTF-8";

@@ -1,9 +1,9 @@
-package com.study.servlet.command;
+package com.study.web.command;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.study.servlet.constant.PathConstants.*;
+import static com.study.web.constant.PathConstants.*;
 
 public class CommandFactory {
     private static Map<String, Command> getCommandMap = new HashMap<>();

@@ -1,17 +1,16 @@
-package com.study.servlet.command;
+package com.study.web.command;
 
-import com.study.domain.LoginService;
-import com.study.domain.Manager;
+import com.study.service.Manager;
 import com.study.persistence.DTO.UserDTO;
-import com.study.servlet.data.Page;
+import com.study.web.data.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static com.study.servlet.constant.ContentConstants.*;
-import static com.study.servlet.constant.PathConstants.LOG_IN_PAGE;
-import static com.study.servlet.constant.PathConstants.START_PAGE;
+import static com.study.web.constant.ContentConstants.*;
+import static com.study.web.constant.PathConstants.LOG_IN_PAGE;
+import static com.study.web.constant.PathConstants.START_PAGE;
 
 public class PostLogInCommand implements Command {
     private static final Logger LOG = LoggerFactory.getLogger(PostLogInCommand.class);

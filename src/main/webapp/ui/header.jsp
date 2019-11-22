@@ -7,7 +7,7 @@
 
 
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="${cookie['bundle'].value}"/>
+<fmt:setBundle basename="${sessionScope.bundle}"/>
 
 <html>
 <head>

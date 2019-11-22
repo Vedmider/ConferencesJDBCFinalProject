@@ -1,4 +1,4 @@
-package com.study.servlet;
+package com.study.web;
 
 
 import com.study.persistence.dao.ConferenceDAO;

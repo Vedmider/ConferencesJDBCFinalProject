@@ -1,4 +1,4 @@
-package com.study.servlet.constant;
+package com.study.web.constant;
 
 public class PathConstants {
     public static final String START_PAGE = "/ui/index.jsp";

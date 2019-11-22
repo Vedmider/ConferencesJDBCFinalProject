@@ -1,8 +1,8 @@
-package com.study.servlet;
+package com.study.web;
 
-import com.study.servlet.command.Command;
-import com.study.servlet.command.CommandFactory;
-import com.study.servlet.data.Page;
+import com.study.web.command.Command;
+import com.study.web.command.CommandFactory;
+import com.study.web.data.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

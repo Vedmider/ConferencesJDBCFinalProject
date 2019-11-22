@@ -1,7 +1,7 @@
-package com.study.servlet.command;
+package com.study.web.command;
 
-import com.study.servlet.constant.PathConstants;
-import com.study.servlet.data.Page;
+import com.study.web.constant.PathConstants;
+import com.study.web.data.Page;
 
 import javax.servlet.http.HttpServletRequest;
 

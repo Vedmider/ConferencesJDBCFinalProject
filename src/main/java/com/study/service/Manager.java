@@ -1,4 +1,4 @@
-package com.study.domain;
+package com.study.service;
 
 import com.study.persistence.DTO.UserDTO;
 

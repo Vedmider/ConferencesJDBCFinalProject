@@ -4,11 +4,55 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
 
-    <welcome-file-list>
-        <welcome-file>index</welcome-file>
-    </welcome-file-list>
+    <filter>
+        <filter-name>localizationFilter</filter-name>
+        <filter-class>com.study.web.filter.SessionLocalizationFilter</filter-class>
+        <init-param>
+            <param-name>locale</param-name>
+            <param-value>en</param-value>
+        </init-param>
+        <init-param>
+            <param-name>bundle</param-name>
+            <param-value>message</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>localizationFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>com.study.web.filter.EncodingFilter</filter-class>
+        <init-param>
+            <param-name>requestEncoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>staticResourceFilter</filter-name>
+        <filter-class>com.study.web.filter.StaticContentFilter</filter-class>
+        <init-param>
+            <param-name>app_path</param-name>
+            <param-value>app</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>staticResourceFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 
     <resource-ref>
+        <description>DB Connection</description>
         <res-ref-name>jdbc/myDB</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>

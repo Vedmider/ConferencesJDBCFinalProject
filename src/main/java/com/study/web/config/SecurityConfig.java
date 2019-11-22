@@ -1,9 +1,9 @@
-package com.study.servlet.config;
+package com.study.web.config;
 
 import java.util.*;
 
-import static com.study.servlet.constant.ContentConstants.ADMIN;
-import static com.study.servlet.constant.ContentConstants.USER;
+import static com.study.web.constant.ContentConstants.ADMIN;
+import static com.study.web.constant.ContentConstants.USER;
 
 public class SecurityConfig {
 

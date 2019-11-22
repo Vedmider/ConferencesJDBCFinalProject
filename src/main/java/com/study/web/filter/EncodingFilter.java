@@ -1,19 +1,14 @@
-package com.study.servlet.filter;
+package com.study.web.filter;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.study.servlet.constant.ContentConstants.CONTENT_TEXT_HTML_CHARSET_UTF_8;
-import static com.study.servlet.constant.ContentConstants.UTF_8;
-import static com.study.servlet.constant.PathConstants.ROOT_FILTER_URL;
+import static com.study.web.constant.ContentConstants.CONTENT_TEXT_HTML_CHARSET_UTF_8;
+import static com.study.web.constant.ContentConstants.UTF_8;
 
-@WebFilter(urlPatterns = {ROOT_FILTER_URL}, initParams = {
-        @WebInitParam(name = "requestEncoding", value = UTF_8)
-})
+
 public class EncodingFilter implements Filter {
     private String encoding;
 

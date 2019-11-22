@@ -1,4 +1,4 @@
-package com.study.servlet.filter;
+package com.study.web.filter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,13 +9,11 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-import static com.study.servlet.constant.PathConstants.*;
+import static com.study.web.constant.PathConstants.*;
 
-@WebFilter(filterName = "StaticContentFilter", urlPatterns = {ROOT_FILTER_URL})
 public class StaticContentFilter implements Filter {
     private static final Logger LOG = LoggerFactory.getLogger(StaticContentFilter.class);
 

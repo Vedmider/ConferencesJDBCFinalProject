@@ -21,21 +21,24 @@
     </properties>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit}</version>
             <scope>test</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>${mockito}</version>
             <scope>test</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql}</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
@@ -64,8 +67,7 @@
                 <configuration>
                     <port>8888</port>
                     <path>/conferences</path>
-                    <ignorePackaging>true</ignorePackaging>
-                    <contextFile>${project.basedir}/src/main/webapp/META-INF/context.xml</contextFile>
+                    <contextFile>./src/main/webapp/META-INF/context.xml</contextFile>
                 </configuration>
                 <dependencies>
                     <dependency>

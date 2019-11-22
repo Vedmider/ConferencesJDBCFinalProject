@@ -1,27 +1,18 @@
-package com.study.servlet.filter;
+package com.study.web.filter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.FilterConfig;
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.annotation.WebInitParam;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static com.study.servlet.constant.ContentConstants.BUNDLE;
-import static com.study.servlet.constant.ContentConstants.LOCALE;
-import static com.study.servlet.constant.PathConstants.ROOT_FILTER_URL;
+import static com.study.web.constant.ContentConstants.BUNDLE;
+import static com.study.web.constant.ContentConstants.LOCALE;
 
-@WebFilter(filterName = "SessionLocaleFilter", urlPatterns = {ROOT_FILTER_URL},
-initParams = {
-        @WebInitParam(name = LOCALE, value = "en"),
-        @WebInitParam(name = BUNDLE, value = "message")
-})
 public class SessionLocalizationFilter implements Filter {
     private static final Logger LOG = LoggerFactory.getLogger(SessionLocalizationFilter.class);
     private String defaultLocale;
@@ -47,8 +38,6 @@ public class SessionLocalizationFilter implements Filter {
             setLocale(session);
         }
         setBundle(session);
-        Cookie cookie = new Cookie(BUNDLE, defaultBundle);
-        httpServletResponse.addCookie(cookie);
 
         chain.doFilter(request, response);
     }
