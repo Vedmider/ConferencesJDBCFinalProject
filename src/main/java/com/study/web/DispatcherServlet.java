@@ -41,7 +41,7 @@ public class DispatcherServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + page.getUrl());
         } else {
             LOG.info("Forward to page URL {}", page.getUrl());
-            req.getRequestDispatcher(page.getUrl()).forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF" + page.getUrl()).forward(req, resp);
         }
     }
 

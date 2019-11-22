@@ -14,11 +14,6 @@
     <base href="${pageContext.request.contextPath}/">
 </head>
 <body>
-Session scope <c:out value="${sessionScope.get(locale)}"/>
-simple value <c:out value="${locale}"/>
-
-Session scope <c:out value="${sessionScope.get(bundle)}"/>
-simple value <c:out value="${cookie['bundle'].value}"/>
 <header class="header_area">
     <div class="main_menu">
         <nav class="navbar navbar-expand-lg navbar-light">
@@ -69,6 +64,8 @@ simple value <c:out value="${cookie['bundle'].value}"/>
                                 <li class="nav-item"><a href="?sessionLocale=en" class="nav-link"><fmt:message key="header.locale.en" /></a></li>
                                 <li class="nav-item"><a href="?sessionLocale=de" class="nav-link"><fmt:message key="header.locale.de" /></a></li>
                                 <li class="nav-item"><a href="?sessionLocale=fr" class="nav-link"><fmt:message key="header.locale.fr" /></a></li>
+                                <li class="nav-item"><a href="?sessionLocale=ua" class="nav-link"><fmt:message key="header.locale.ua" /></a></li>
+
                             </ul>
                         </li>
                     </ul>

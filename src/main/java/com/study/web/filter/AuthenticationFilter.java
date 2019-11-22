@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static com.study.web.constant.PathConstants.FORBIDDEN_PAGE;
-import static com.study.web.constant.PathConstants.SLASH_LOGIN;
+import static com.study.web.constant.PathConstants.*;
 
 public class AuthenticationFilter implements Filter {
     private static final Logger LOG = LoggerFactory.getLogger(AuthenticationFilter.class);
@@ -49,7 +48,7 @@ public class AuthenticationFilter implements Filter {
 
         if (!hasPermission) {
             LOG.info("User has not permission : " + user + " , " + path);
-            httpServletResponse.sendRedirect(contextPath + FORBIDDEN_PAGE);
+            httpServletResponse.sendRedirect(contextPath + SLASH_FORBIDDEN);
             return;
         }
 

@@ -171,6 +171,14 @@ body{
   </form>
 
   <c:out value="${alert}"/>
+  <c:if test="${alert}">
+      AHTUNG
+      alert("Wrong login or password");
+  </c:if>
+  <c:if test="${sessionScope.login_alert}">
+      MQ AHTUNG
+      alert("Alert from RabbitMQ");
+  </c:if>
 
   <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
 
