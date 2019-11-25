@@ -3,15 +3,18 @@ package com.study.web.config;
 import java.util.*;
 
 import static com.study.web.constant.ContentConstants.*;
+import static com.study.web.constant.PathConstants.SLASH_ADMINISTRATION;
+import static com.study.web.constant.PathConstants.SLASH_SPEAKERS;
 
 public class SecurityConfig {
 
     private static Map<String, List<String>> securityPages = new HashMap<>();
 
     static {
-        securityPages.put(ADMIN, Arrays.asList("/admin.jsp", "/common.jsp"));
-        securityPages.put(USER, Arrays.asList("/user.jsp", "/common.jsp"));
-        securityPages.put(SPEAKER, Arrays.asList("/speakers", "/administration"));
+        securityPages.put(ADMIN, Arrays.asList(SLASH_ADMINISTRATION, SLASH_SPEAKERS));
+        securityPages.put(USER, Arrays.asList(SLASH_SPEAKERS));
+        securityPages.put(SPEAKER, Arrays.asList(SLASH_SPEAKERS, SLASH_ADMINISTRATION));
+        securityPages.put(MODERATOR, Arrays.asList(SLASH_SPEAKERS, SLASH_ADMINISTRATION));
     }
 
     public static boolean isSecurePage(String page) {

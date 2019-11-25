@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import static com.study.web.constant.ContentConstants.LOCALE;
 
@@ -42,6 +43,11 @@ public class DispatcherServlet extends HttpServlet {
         if (page.isRedirect()) {
             LOG.info("Redirect to page URL {}", page.getUrl());
             resp.sendRedirect(req.getContextPath() + page.getUrl());
+        } else if (page.isAjax()) {
+            resp.setContentType("application/json");
+            PrintWriter out = resp.getWriter();
+            out.print(page.getAjaxContent());
+            out.flush();
         } else {
             LOG.info("Forward to page URL {}", page.getUrl());
             req.getRequestDispatcher("/WEB-INF" + page.getUrl()).forward(req, resp);
@@ -56,7 +62,7 @@ public class DispatcherServlet extends HttpServlet {
         return path;
     }
 
-    private void setLocale(HttpServletRequest httpServletRequest){
+    private void setLocale(HttpServletRequest httpServletRequest) {
         if (httpServletRequest.getParameter("sessionLocale") != null) {
             LOG.info("Setting locale and bundle attribute to session. Set locale: {}", httpServletRequest.getParameter("sessionLocale"));
             httpServletRequest.getSession().setAttribute(LOCALE, httpServletRequest.getParameter("sessionLocale"));

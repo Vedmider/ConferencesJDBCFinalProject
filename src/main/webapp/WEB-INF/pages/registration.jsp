@@ -30,28 +30,31 @@
             <!-- <img src="images/signup-bg.jpg" alt=""> -->
             <div class="container">
                 <div class="signup-content">
-                    <form method="POST" id="signup-form" class="signup-form">
+                    <form method="POST" id="signup-form" class="signup-form" action="registration">
                         <h2 class="form-title">Create account</h2>
                         <div class="form-group">
-                            <input type="text" class="form-input" name="name" id="name" placeholder="Your Name"/>
+                            <input type="text" class="form-input" required="required" name="name" id="login" placeholder="Your Login"/>
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-input" name="email" id="email" placeholder="Your Email"/>
+                            <input type="email" class="form-input" required="required" name="email" id="email" placeholder="Your Email"/>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-input" name="password" id="password" placeholder="Password"/>
+                            <input type="text" class="form-input" required="required" name="name" value="First Name" id="first-name" placeholder="First Name"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-input" required="required" name="name" value="Last Name" id="last-name" placeholder="Last Name"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-input" required="required" name="password" id="password" placeholder="Password"/>
                             <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-input" name="re_password" id="re_password" placeholder="Repeat your password"/>
-                        </div>
-                        <div class="form-group">
-                            <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
-                            <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                            <input type="password" class="form-input" required="required"  name="re_password" id="re_password" placeholder="Repeat your password"/>
                         </div>
                         <div class="form-group">
                             <input type="submit" name="submit" id="submit" class="form-submit" value="Sign up"/>
                         </div>
+                        <div class="register-message"></div>
                     </form>
                     <p class="loginhere">
                         <fmt:message key="register.have.account"/> <a href="login" class="loginhere-link"><fmt:message key="header.login"/></a>

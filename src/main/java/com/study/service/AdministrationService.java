@@ -1,6 +1,7 @@
 package com.study.service;
 
 import com.study.persistence.DTO.ConferenceDTO;
+import com.study.persistence.DTO.UserDTO;
 import com.study.persistence.dao.ConferenceDAO;
 import com.study.persistence.dao.ReportDAO;
 import com.study.persistence.entity.Conference;
@@ -18,6 +19,7 @@ public class AdministrationService {
     private static final Logger LOG = LoggerFactory.getLogger(AdministrationService.class);
     private static final ConferenceDAO conferenceDAO = new ConferenceDAO();
     private static final ReportService reportService = new ReportService();
+    private static final UserService userService = new UserService();
 
     public List<ConferenceDTO> getAllConferences() {
         List<Conference> conferences = conferenceDAO.getAll();
@@ -31,5 +33,9 @@ public class AdministrationService {
                         .mapConference(conference, reportService
                                 .getAllById(conference.getId())))
                 .collect(Collectors.toList());
+    }
+
+    public List<UserDTO> getAllUsers(){
+        return userService.getAll();
     }
 }

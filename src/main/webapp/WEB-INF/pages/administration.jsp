@@ -76,6 +76,121 @@
 						</div>
 						</c:forEach>
 					</div>
+				<c:forEach items="${sessionScope.conferences}" var="conference">
+				<h3>Conference: </h3> <c:out value="${conference.theme}"/>
+				<h3>Reports</h3>
+				<div class="table">
+					<div class="row header">
+						<div class="cell">
+							ID
+						</div>
+						<div class="cell">
+							Title
+						</div>
+						<div class="cell">
+							Speaker
+						</div>
+						<div class="cell">
+							Time start
+						</div>
+						<div class="cell">
+							Number of registered
+						</div>
+						<div class="cell">
+							Number of attended
+						</div>
+					</div>
+					<c:forEach items="${conference.reports}" var="report">
+						<div class="row">
+							<div class="cell" data-title="ID">
+								<c:out value="${report.id}"/>
+							</div>
+							<div class="cell" data-title="Title">
+								<c:out value="${report.title}"/>
+							</div>
+							<div class="cell" data-title="Speaker">
+								<c:set var="fullName" value="${report.speaker.firstName}  ${report.speaker.lastName}"/>
+								<c:out value="${fullName}"/>
+							</div>
+							<div class="cell" data-title="Time start">
+								<c:out value="${report.timeStart}"/>
+							</div>
+							<div class="cell" data-title="Registered">
+								<c:out value="${report.registered}"/>
+							</div>
+							<div class="cell" data-title="Attended">
+								<c:out value="${report.attended}"/>
+							</div>
+						</div>
+					</c:forEach>
+				</c:forEach>
+			</div>
+		</div>
+	</div>
+	</c:if>
+	<c:if test="${sessionScope.speakers != null}">
+		<table>
+			<tr>
+				<th>ID</th>
+				<th>Full name</th>
+				<th>Address</th>
+				<th>Planned date</th>
+			</tr>
+		<c:forEach items="${sessionScope.speakers}" var="speaker">
+			<tr>
+				<td><c:out value="${speaker.id}"/></td>
+				<td><c:set var="fullName" value="${speaker.firstName}  ${speaker.lastName}"/>
+					<c:out value="${fullName}"/></td>
+				<td><c:out value="${speaker.email}"/></td>
+				<td><c:out value="${speaker.rating}"/></td>
+				<td><c:out value="${speaker.bonuses}"/></td>
+			</tr>
+		</c:forEach>
+		</table>
+	</c:if>
+	<c:if test="${sessionScope.users != null}">
+	<div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<div class="table">
+					<div class="row header">
+						<div class="cell">
+							ID
+						</div>
+						<div class="cell">
+							Full name
+						</div>
+						<div class="cell">
+							Login
+						</div>
+						<div class="cell">
+							Email
+						</div>
+						<div class="cell">
+							Role
+						</div>
+					</div>
+					<c:forEach items="${sessionScope.users}" var="user">
+						<div class="row">
+							<div class="cell" data-title="ID">
+								<c:out value="${user.id}"/>
+							</div>
+							<div class="cell" data-title="Theme">
+								<td><c:set var="fullName" value="${user.firstName}  ${user.lastName}"/>
+									<c:out value="${fullName}"/></td>
+							</div>
+							<div class="cell" data-title="Planned date">
+								<c:out value="${user.login}"/>
+							</div>
+							<div class="cell" data-title="Happened date">
+								<c:out value="${user.email}"/>
+							</div>
+							<div class="cell" data-title="Address">
+								<c:out value="${user.role.roleTitle}"/>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
 			</div>
 		</div>
 	</div>

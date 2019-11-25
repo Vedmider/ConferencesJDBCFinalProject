@@ -4,8 +4,8 @@ public class User {
     private int id;
     private String login;
     private String password;
-    private String firstName;
-    private String lastName;
+    private String firstName = "";
+    private String lastName = "";
     private String email;
     private int userRole;
 

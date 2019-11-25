@@ -22,6 +22,7 @@ public class CommandFactory {
         getCommandMap.put(SLASH_ABOUT, new AboutCommand());
         getCommandMap.put(SLASH_REGISTRATION, new RegistrationCommand());
         postCommandMap.put(SLASH_LOGIN, new PostLogInCommand());
+        postCommandMap.put(SLASH_REGISTRATION, new PostRegistrationCommand());
     }
 
     private CommandFactory() {

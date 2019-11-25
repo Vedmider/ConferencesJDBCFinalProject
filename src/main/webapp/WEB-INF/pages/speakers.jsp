@@ -72,7 +72,33 @@
         <!--================End Home Banner Area =================-->
         
         <!--================Team Area =================-->
-        <c:choose>
+		<c:choose>
+			<c:when test="${sessionScope.conferences != null}">
+				<section class="team_area p_120">
+					<div class="container">
+						<div class="main_title"></div>
+							<table style="width:100%">
+								<tr>
+									<th>ID</th>
+									<th>Theme</th>
+									<th>Address</th>
+									<th>Planned date</th>
+								</tr>
+								<c:forEach items="${sessionScope.conferences}" var="conference">
+								<tr>
+									<td><c:out value="${conference.id}"/></td>
+									<td><c:out value="${conference.theme}"/></td>
+									<td><c:out value="${conference.address}"/></td>
+									<td><c:out value="${conference.plannedDateTime}"/></td>
+								</tr>
+								</c:forEach>
+							</table>
+					</div>
+				</section>
+			</c:when>
+			<c:otherwise> <h3>There is no speakers yet</h3></c:otherwise>
+		</c:choose>
+		<c:choose>
 		<c:when test="${sessionScope.speakers != null}">
 		<section class="team_area p_120">
         	<div class="container">

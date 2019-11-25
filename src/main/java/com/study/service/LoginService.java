@@ -1,11 +1,10 @@
 package com.study.service;
 
-
-import com.study.persistence.DTO.RoleDTO;
 import com.study.persistence.DTO.UserDTO;
 import com.study.persistence.dao.RoleDAO;
 import com.study.persistence.dao.UserDAO;
 import com.study.persistence.entity.User;
+import com.study.persistence.mapper.EntityDTOMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +18,7 @@ public class LoginService {
 
         if (userEntity != null){
             LOG.info("userEntity login {} password {} id {}", userEntity.getLogin(), userEntity.getPassword(), userEntity.getId());
-            return convert(userEntity);
+            return EntityDTOMapper.mapUser(userEntity, roleDAO.getById(userEntity.getId()));
         }
         return null;
     }
@@ -32,16 +31,4 @@ public class LoginService {
                 .findAny().orElse(null);
     }
 
-    private UserDTO convert(User userEntity){
-        UserDTO userDTO = new UserDTO();
-        RoleDTO roleDTO = new RoleDTO(roleDAO.getById(userEntity.getId()));
-        userDTO.setId(userEntity.getId());
-        userDTO.setFirstName(userEntity.getFirstName());
-        userDTO.setLastName(userEntity.getLastName());
-        userDTO.setEmail(userEntity.getEmail());
-        userDTO.setLogin(userEntity.getLogin());
-        userDTO.setPassword(userEntity.getPassword());
-        userDTO.setRole(roleDTO);
-        return userDTO;
-    }
 }
