@@ -17,6 +17,10 @@ public class CommandFactory {
         getCommandMap.put(SLASH_LOGOUT, new LogOutCommand());
         getCommandMap.put(SLASH_LOGIN, new LogInCommand());
         getCommandMap.put(SLASH, new ConferencesCommand());
+        getCommandMap.put(SLASH_SPEAKERS, new SpeakersCommand());
+        getCommandMap.put(SLASH_ADMINISTRATION, new AdministrationCommand());
+        getCommandMap.put(SLASH_ABOUT, new AboutCommand());
+        getCommandMap.put(SLASH_REGISTRATION, new RegistrationCommand());
         postCommandMap.put(SLASH_LOGIN, new PostLogInCommand());
     }
 

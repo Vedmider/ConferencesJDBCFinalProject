@@ -1,5 +1,7 @@
 package com.study.persistence.DTO;
 
+import java.util.Objects;
+
 public class UserDTO {
     private int id;
     private String login;
@@ -64,5 +66,38 @@ public class UserDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(login, password, firstName, lastName, email, role);
+    }
+
+    @Override
+    public boolean equals(final Object obj){
+        if(obj instanceof UserDTO){
+            final UserDTO other = (UserDTO) obj;
+            return Objects.equals(role, other.role)
+                    && login == other.login
+                    && password == other.password
+                    && firstName == other.firstName
+                    && lastName == other.lastName
+                    && email == other.email;
+        } else{
+            return false;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                '}';
     }
 }

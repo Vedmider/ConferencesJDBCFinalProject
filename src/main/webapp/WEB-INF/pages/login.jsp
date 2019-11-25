@@ -167,18 +167,9 @@ body{
   <form class="login" action="${pageContext.request.contextPath}/login" method="post">
 	  <input type="text" placeholder="username" id="login" name="login"><br>
 	  <input type="password" placeholder="password" id="password" name="password"><br>
+      <c:out value="${sessionScope.login_alert}"/><br>
 	  <input type="submit" value="Login">
   </form>
-
-  <c:out value="${alert}"/>
-  <c:if test="${alert}">
-      AHTUNG
-      alert("Wrong login or password");
-  </c:if>
-  <c:if test="${sessionScope.login_alert}">
-      MQ AHTUNG
-      alert("Alert from RabbitMQ");
-  </c:if>
 
   <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
 

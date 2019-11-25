@@ -55,11 +55,6 @@
             <version>${servlet.api}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>com.rabbitmq</groupId>
-            <artifactId>amqp-client</artifactId>
-            <version>5.7.3</version>
-        </dependency>
     </dependencies>
 
     <build>

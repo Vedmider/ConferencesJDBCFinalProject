@@ -1,6 +1,7 @@
 package com.study.persistence.dao;
 
 import com.study.persistence.entity.Conference;
+import com.study.persistence.entity.Report;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -16,6 +17,8 @@ public class ConferenceDAO extends AbstractDao<Conference> {
             "WHERE id = ?";
     private static final String DELETE_FROM_CONFERENCES = "DELETE FROM conferences WHERE id = ?";
     private static final String SELECT_FROM_CONFERENCES = "SELECT * FROM conferences WHERE id = ";
+    private static final String SELECT_ALL_CONFERENCE_REPORTS = "SELECT * FROM reports WHERE conference_id = ";
+    private static final ReportDAO reportDAO = new ReportDAO();
 
 
     @Override
@@ -74,6 +77,20 @@ public class ConferenceDAO extends AbstractDao<Conference> {
     public boolean delete(Conference entity) {
         return update(DELETE_FROM_CONFERENCES, preparedStatement -> {
             preparedStatement.setInt(1, entity.getId());
+        });
+    }
+
+    public List<Report> getAllReports(int id){
+        return reportDAO.getAllConditional(SELECT_ALL_CONFERENCE_REPORTS + id, resultSet -> {
+            Report report = new Report();
+            report.setId(resultSet.getInt("id"));
+            report.setConferenceId(resultSet.getInt("conference_id"));
+            report.setTitle(resultSet.getString("title"));
+            report.setTimeStart(resultSet.getTime("time_start").toLocalTime());
+            report.setSpeakerId(resultSet.getInt("speaker_id"));
+            report.setAttended(resultSet.getInt("attended"));
+            report.setRegistered(resultSet.getInt("registered"));
+            return report;
         });
     }
 }

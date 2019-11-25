@@ -2,8 +2,7 @@ package com.study.web.config;
 
 import java.util.*;
 
-import static com.study.web.constant.ContentConstants.ADMIN;
-import static com.study.web.constant.ContentConstants.USER;
+import static com.study.web.constant.ContentConstants.*;
 
 public class SecurityConfig {
 
@@ -12,6 +11,7 @@ public class SecurityConfig {
     static {
         securityPages.put(ADMIN, Arrays.asList("/admin.jsp", "/common.jsp"));
         securityPages.put(USER, Arrays.asList("/user.jsp", "/common.jsp"));
+        securityPages.put(SPEAKER, Arrays.asList("/speakers", "/administration"));
     }
 
     public static boolean isSecurePage(String page) {

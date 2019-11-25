@@ -28,6 +28,7 @@ public class SpeakerDAO extends AbstractDao<Speaker> {
             speaker.setUserRole(resultSet.getInt("user_role"));
             speaker.setRating(resultSet.getInt("rating"));
             speaker.setBonuses(resultSet.getInt("bonuses"));
+            speaker.setId(resultSet.getInt("id"));
             return speaker;
         }).get(0);
     }
@@ -45,6 +46,7 @@ public class SpeakerDAO extends AbstractDao<Speaker> {
             speaker.setUserRole(resultSet.getInt("user_role"));
             speaker.setRating(resultSet.getInt("rating"));
             speaker.setBonuses(resultSet.getInt("bonuses"));
+            speaker.setId(resultSet.getInt("id"));
             return speaker;
         });
     }

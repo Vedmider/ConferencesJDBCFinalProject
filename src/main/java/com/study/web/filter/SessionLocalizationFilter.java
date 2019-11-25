@@ -30,15 +30,8 @@ public class SessionLocalizationFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpSession session = httpServletRequest.getSession();
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-
-        if (httpServletRequest.getParameter("sessionLocale") != null) {
-            LOG.info("Setting locale and bundle attribute to session. Set locale: {}", httpServletRequest.getParameter("sessionLocale"));
-            session.setAttribute(LOCALE, httpServletRequest.getParameter("sessionLocale"));
-        } else {
-            setLocale(session);
-        }
+        setLocale(session);
         setBundle(session);
-
         chain.doFilter(request, response);
     }
 

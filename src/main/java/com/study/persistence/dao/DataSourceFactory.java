@@ -43,8 +43,6 @@ public class DataSourceFactory {
             LOG.error("Error while connection creation", e);
         }
 
-
-
         return connection;
     }
 

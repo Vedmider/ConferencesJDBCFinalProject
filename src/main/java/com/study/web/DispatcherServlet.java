@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.study.web.constant.ContentConstants.LOCALE;
+
 @WebServlet(value = "/app/*")
 public class DispatcherServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(DispatcherServlet.class);
@@ -31,10 +33,11 @@ public class DispatcherServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = getPath(req);
+        req.setAttribute("origRequestURL", req.getRequestURL());
 
         Command command = CommandFactory.getCommand(path, req.getMethod());
-
         Page page = command.perform(req);
+        setLocale(req);
 
         if (page.isRedirect()) {
             LOG.info("Redirect to page URL {}", page.getUrl());
@@ -51,5 +54,12 @@ public class DispatcherServlet extends HttpServlet {
         String path = requestUri.substring(lastPath);
         LOG.info("Path: " + path);
         return path;
+    }
+
+    private void setLocale(HttpServletRequest httpServletRequest){
+        if (httpServletRequest.getParameter("sessionLocale") != null) {
+            LOG.info("Setting locale and bundle attribute to session. Set locale: {}", httpServletRequest.getParameter("sessionLocale"));
+            httpServletRequest.getSession().setAttribute(LOCALE, httpServletRequest.getParameter("sessionLocale"));
+        }
     }
 }
