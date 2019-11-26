@@ -7,12 +7,13 @@ import com.study.persistence.entity.User;
 import com.study.persistence.mapper.EntityDTOMapper;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.study.web.constant.ContentConstants.USER;
 
-public class UserService {
+public class UserService implements DBActionsService {
     private static final UserDAO userDAO = new UserDAO();
     private static final RoleDAO roleDAO = new RoleDAO();
 
@@ -85,10 +86,14 @@ public class UserService {
                 .findFirst();
     }
 
-    public List<UserDTO> getAll(){
+    public List<UserDTO> getAll() {
         return userDAO.getAll().stream()
                 .map(user -> EntityDTOMapper.mapUser(user, roleDAO.getById(user.getId())))
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void perform(Map<String, String> params) {
+
+    }
 }

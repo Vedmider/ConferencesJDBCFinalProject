@@ -8,7 +8,9 @@ import com.study.persistence.mapper.EntityDTOMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LoginService {
+import java.util.Map;
+
+public class LoginService implements DBActionsService{
     private static final Logger LOG = LoggerFactory.getLogger(LoginService.class);
     private static final UserDAO userDAO = new UserDAO();
     private static final RoleDAO roleDAO = new RoleDAO();
@@ -31,4 +33,8 @@ public class LoginService {
                 .findAny().orElse(null);
     }
 
+    @Override
+    public void perform(Map<String, String> params) {
+
+    }
 }

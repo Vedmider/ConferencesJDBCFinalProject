@@ -10,12 +10,14 @@ import com.study.persistence.mapper.EntityDTOMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-public class AdministrationService {
+public class AdministrationService implements DBActionsService {
     private static final Logger LOG = LoggerFactory.getLogger(AdministrationService.class);
     private static final ConferenceDAO conferenceDAO = new ConferenceDAO();
     private static final ReportService reportService = new ReportService();
@@ -35,7 +37,90 @@ public class AdministrationService {
                 .collect(Collectors.toList());
     }
 
-    public List<UserDTO> getAllUsers(){
+    public List<UserDTO> getAllUsers() {
         return userService.getAll();
+    }
+
+    public void deleteConference(int id) {
+        LOG.info("Starting deleting conference entity");
+        Conference conference = new Conference();
+        conference.setId(id);
+        conferenceDAO.delete(conference);
+    }
+
+    public void deleteConference(Conference conference) {
+        LOG.info("Starting deleting conference entity");
+        conferenceDAO.delete(conference);
+    }
+
+    public void updateConference(Conference conference) {
+        if (conference.getId() == 0) {
+            LOG.error("Conference entity has ID = 0");
+        }
+        conferenceDAO.update(conference);
+    }
+
+    public void createConference(Conference conference) {
+        conferenceDAO.create(conference);
+    }
+
+    @Override
+    public void perform(Map<String, String> params) {
+        Conference conference = mapConferenceFromParams(params);
+
+        if (params.get("type").equalsIgnoreCase("delete")) {
+            if (conference.getId() != 0){
+                deleteConference(conference);
+            }
+        }
+        if ((params.get("type").equalsIgnoreCase("update"))) {
+            if (conference.getId() != 0){
+                updateConference(conference);
+            }
+        }
+        if ((params.get("type").equalsIgnoreCase("create"))) {
+            if (conference.getId() == 0){
+                createConference(conference);
+            }
+        }
+    }
+
+    private Conference mapConferenceFromParams(Map<String, String> params) {
+        Conference conference;
+
+        if (params.get("id") != null) {
+            conference = conferenceDAO.getById(Integer.parseInt(params.get("id")));
+        } else {
+            conference = new Conference();
+        }
+        if (params.get("theme") != null) {
+            conference.setTheme(params.get("theme"));
+        }
+        if (params.get("plannedDateTime") != null) {
+            String[] dateTime = params.get("plannedDateTime").split("T");
+            String[] date = dateTime[0].split("-");
+            String[] time = dateTime[1].split(":");
+            conference.setPlannedDateTime(LocalDateTime.of(Integer.parseInt(date[0]),
+                    Integer.parseInt(date[1]),
+                    Integer.parseInt(date[2]),
+                    Integer.parseInt(time[0]),
+                    Integer.parseInt(time[1]),
+                    Integer.parseInt(time[2])));
+        }
+        if (params.get("happenedDateTime") != null) {
+            String[] dateTime = params.get("happenedDateTime").split("T");
+            String[] date = dateTime[0].split("-");
+            String[] time = dateTime[1].split(":");
+            conference.setPlannedDateTime(LocalDateTime.of(Integer.parseInt(date[0]),
+                    Integer.parseInt(date[1]),
+                    Integer.parseInt(date[2]),
+                    Integer.parseInt(time[0]),
+                    Integer.parseInt(time[1]),
+                    Integer.parseInt(time[2])));
+        }
+        if (params.get("address") != null) {
+            conference.setAddress(params.get("address"));
+        }
+        return conference;
     }
 }

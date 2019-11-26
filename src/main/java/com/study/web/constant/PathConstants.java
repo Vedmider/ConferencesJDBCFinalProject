@@ -22,6 +22,7 @@ public class PathConstants {
     public static final String SLASH_ADMINISTRATION = "/administration";
     public static final String SLASH_REGISTRATION = "/registration";
     public static final String SLASH_ABOUT = "/about";
+    public static final String SLASH_DB_ACTION = "/db-action";
     public static final String SLASH = "/";
     public static final String LOG_IN_PAGE = "/pages/login.jsp";
 }

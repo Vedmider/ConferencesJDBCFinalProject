@@ -21,6 +21,7 @@ public class CommandFactory {
         getCommandMap.put(SLASH_ADMINISTRATION, new AdministrationCommand());
         getCommandMap.put(SLASH_ABOUT, new AboutCommand());
         getCommandMap.put(SLASH_REGISTRATION, new RegistrationCommand());
+        getCommandMap.put(SLASH_DB_ACTION, new DBActionCommand());
         postCommandMap.put(SLASH_LOGIN, new PostLogInCommand());
         postCommandMap.put(SLASH_REGISTRATION, new PostRegistrationCommand());
     }

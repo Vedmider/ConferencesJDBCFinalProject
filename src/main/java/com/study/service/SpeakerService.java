@@ -10,9 +10,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-public class SpeakerService {
+public class SpeakerService implements DBActionsService{
     private static final Logger LOG = LoggerFactory.getLogger(SpeakerService.class);
     private static final SpeakerDAO speakerDAO = new SpeakerDAO();
     private static final RoleDAO roleDao = new RoleDAO();
@@ -43,5 +44,10 @@ public class SpeakerService {
 
     public SpeakerDTO getById(int id){
         return convertEntityToDTO(speakerDAO.getById(id));
+    }
+
+    @Override
+    public void perform(Map<String, String> params) {
+
     }
 }

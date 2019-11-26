@@ -11,9 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ReportService {
+public class ReportService implements DBActionsService{
     private static final Logger LOG = LoggerFactory.getLogger(ReportService.class);
     private static final ConferenceDAO conferenceDAO = new ConferenceDAO();
     private static final SpeakerService speakerService = new SpeakerService();
@@ -31,5 +32,10 @@ public class ReportService {
 
     public List<ReportDTO> getAllById(int id){
         return convertEntityToDTO(conferenceDAO.getAllReports(id));
+    }
+
+    @Override
+    public void perform(Map<String, String> params) {
+
     }
 }

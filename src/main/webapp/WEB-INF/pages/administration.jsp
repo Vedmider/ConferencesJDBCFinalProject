@@ -47,14 +47,19 @@
 								Theme
 							</div>
 							<div class="cell">
-								plannedDateTime
+								PlannedDateTime
 							</div>
 							<div class="cell">
-								happenedDateTime
+								HappenedDateTime
 							</div>
 							<div class="cell">
-								address
+								Address
 							</div>
+							<c:if test="${sessionScope.role == 'ADMIN'}">
+								<div class="cell">
+									Delete
+								</div>
+							</c:if>
 						</div>
 						<c:forEach items="${sessionScope.conferences}" var="conference">
 						<div class="row">
@@ -73,10 +78,32 @@
 							<div class="cell" data-title="Address">
 								<c:out value="${conference.address}"/>
 							</div>
+							<c:if test="${sessionScope.role == 'ADMIN'}">
+								<div class="cell" data-title="Delete">
+									<a href="db-action?entity=conference&type=delete&id=<c:out value="${conference.id}"/>">Delete</a>
+								</div>
+							</c:if>
 						</div>
 						</c:forEach>
 					</div>
-				<c:forEach items="${sessionScope.conferences}" var="conference">
+				Create/Update Conference
+				<form action="db-action" id="db-action-form">
+					<label for="id">ID</label>
+					<input type="text" name="id" id="id" value=""><br>
+					<label for="theme">Theme</label>
+					<input type="text" name="theme" id="theme" value="" ><br>
+					<label for="plannedDateTime">Planned date</label>
+					<input type="datetime-local" name="plannedDateTime" id="plannedDateTime" value="" ><br><br>
+					<label for="happenedDateTime">Happened date</label>
+					<input type="datetime-local" name="happenedDateTime" id="happenedDateTime" value="" ><br><br>
+					<label for="type">Type of operation</label>
+					<select id="type">
+						<option value="create">Create</option>
+						<option value="update">Update</option>
+					</select>
+					<input type="submit" value="Submit">
+				</form>
+			<c:forEach items="${sessionScope.conferences}" var="conference">
 				<h3>Conference: </h3> <c:out value="${conference.theme}"/>
 				<h3>Reports</h3>
 				<div class="table">
