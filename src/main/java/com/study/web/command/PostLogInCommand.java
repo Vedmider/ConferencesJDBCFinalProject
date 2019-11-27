@@ -1,7 +1,7 @@
 package com.study.web.command;
 
 import com.study.service.LoginService;
-import com.study.persistence.DTO.UserDTO;
+import com.study.web.DTO.UserDTO;
 import com.study.web.data.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 
 import static com.study.web.constant.ContentConstants.*;
-import static com.study.web.constant.PathConstants.*;
+import static com.study.web.constant.PathConstants.LOG_IN_PAGE;
+import static com.study.web.constant.PathConstants.SLASH_INDEX;
 
 public class PostLogInCommand implements Command {
     private static final Logger LOG = LoggerFactory.getLogger(PostLogInCommand.class);

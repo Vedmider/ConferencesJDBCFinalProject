@@ -3,7 +3,6 @@ package com.study.persistence.dao;
 import com.study.persistence.entity.Conference;
 import com.study.persistence.entity.Report;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 

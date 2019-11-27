@@ -1,17 +1,14 @@
 package com.study.service;
 
-import com.study.persistence.DTO.ConferenceDTO;
-import com.study.persistence.DTO.UserDTO;
 import com.study.persistence.dao.ConferenceDAO;
-import com.study.persistence.dao.ReportDAO;
 import com.study.persistence.entity.Conference;
-import com.study.persistence.entity.Report;
 import com.study.persistence.mapper.EntityDTOMapper;
+import com.study.web.DTO.ConferenceDTO;
+import com.study.web.DTO.UserDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;

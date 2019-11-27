@@ -1,10 +1,10 @@
 package com.study.service;
 
-import com.study.persistence.DTO.SpeakerDTO;
 import com.study.persistence.dao.RoleDAO;
 import com.study.persistence.dao.SpeakerDAO;
 import com.study.persistence.entity.Speaker;
 import com.study.persistence.mapper.EntityDTOMapper;
+import com.study.web.DTO.SpeakerDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,10 +1,10 @@
 package com.study.service;
 
-import com.study.persistence.DTO.UserDTO;
 import com.study.persistence.dao.RoleDAO;
 import com.study.persistence.dao.UserDAO;
 import com.study.persistence.entity.User;
 import com.study.persistence.mapper.EntityDTOMapper;
+import com.study.web.DTO.UserDTO;
 
 import java.util.List;
 import java.util.Map;

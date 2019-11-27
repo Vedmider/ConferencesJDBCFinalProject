@@ -1,4 +1,4 @@
-package com.study.persistence.DTO;
+package com.study.web.DTO;
 
 import com.study.persistence.entity.Right;
 import com.study.persistence.entity.Role;

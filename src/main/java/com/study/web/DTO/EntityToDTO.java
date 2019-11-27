@@ -1,4 +1,4 @@
-package com.study.persistence.DTO;
+package com.study.web.DTO;
 
 import java.util.List;
 

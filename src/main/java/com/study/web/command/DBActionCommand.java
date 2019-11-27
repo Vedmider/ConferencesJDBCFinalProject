@@ -1,13 +1,11 @@
 package com.study.web.command;
 
-import com.study.persistence.entity.Conference;
 import com.study.service.*;
 import com.study.web.data.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;

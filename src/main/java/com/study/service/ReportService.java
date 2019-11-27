@@ -1,12 +1,9 @@
 package com.study.service;
 
-import com.study.persistence.DTO.ReportDTO;
 import com.study.persistence.dao.ConferenceDAO;
-import com.study.persistence.dao.ReportDAO;
-import com.study.persistence.dao.SpeakerDAO;
 import com.study.persistence.entity.Report;
-import com.study.persistence.entity.Speaker;
 import com.study.persistence.mapper.EntityDTOMapper;
+import com.study.web.DTO.ReportDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

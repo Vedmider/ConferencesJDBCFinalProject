@@ -1,18 +1,16 @@
 package com.study.web.command;
 
-import com.study.persistence.DTO.ConferenceDTO;
-import com.study.persistence.DTO.SpeakerDTO;
-import com.study.persistence.DTO.UserDTO;
-import com.study.persistence.entity.Conference;
 import com.study.service.AdministrationService;
 import com.study.service.SpeakerService;
+import com.study.web.DTO.ConferenceDTO;
+import com.study.web.DTO.SpeakerDTO;
+import com.study.web.DTO.UserDTO;
 import com.study.web.data.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import java.util.List;
 
 import static com.study.web.constant.PathConstants.ADMINISTRATION_PAGE;

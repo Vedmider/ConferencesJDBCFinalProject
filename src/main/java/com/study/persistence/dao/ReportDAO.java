@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Time;
-import java.time.LocalTime;
 import java.util.List;
 
 public class ReportDAO extends AbstractDao<Report> {
