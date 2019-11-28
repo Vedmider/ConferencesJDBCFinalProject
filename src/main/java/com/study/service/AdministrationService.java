@@ -4,6 +4,7 @@ import com.study.persistence.dao.ConferenceDAO;
 import com.study.persistence.entity.Conference;
 import com.study.persistence.mapper.EntityDTOMapper;
 import com.study.web.DTO.ConferenceDTO;
+import com.study.web.DTO.ReportDTO;
 import com.study.web.DTO.UserDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +30,12 @@ public class AdministrationService implements DBActionsService {
 
         return conferences.stream()
                 .map(conference -> EntityDTOMapper
-                        .mapConference(conference, reportService
-                                .getAllById(conference.getId())))
+                        .mapConference(conference, getAllReportsById(conference.getId())))
                 .collect(Collectors.toList());
+    }
+
+    public List<ReportDTO> getAllReportsById(int id) {
+        return reportService.convertEntityToDTO(conferenceDAO.getAllReports(id));
     }
 
     public List<UserDTO> getAllUsers() {
@@ -45,38 +49,40 @@ public class AdministrationService implements DBActionsService {
         conferenceDAO.delete(conference);
     }
 
-    public void deleteConference(Conference conference) {
+    public boolean deleteConference(Conference conference) {
         LOG.info("Starting deleting conference entity");
-        conferenceDAO.delete(conference);
+        return conferenceDAO.delete(conference);
     }
 
-    public void updateConference(Conference conference) {
+    public boolean updateConference(Conference conference) {
         if (conference.getId() == 0) {
             LOG.error("Conference entity has ID = 0");
         }
-        conferenceDAO.update(conference);
+        return conferenceDAO.update(conference);
     }
 
-    public void createConference(Conference conference) {
-        conferenceDAO.create(conference);
+    public int createConference(Conference conference) {
+        return conferenceDAO.create(conference);
     }
 
     @Override
     public void perform(Map<String, String> params) {
         Conference conference = mapConferenceFromParams(params);
+        String type = params.get("type");
 
-        if (params.get("type").equalsIgnoreCase("delete")) {
-            if (conference.getId() != 0){
+        LOG.info("DB Action type: " + type);
+        if (type.equalsIgnoreCase("delete")) {
+            if (conference.getId() != 0) {
                 deleteConference(conference);
             }
         }
-        if ((params.get("type").equalsIgnoreCase("update"))) {
-            if (conference.getId() != 0){
+        if (type.equalsIgnoreCase("update")) {
+            if (conference.getId() != 0) {
                 updateConference(conference);
             }
         }
-        if ((params.get("type").equalsIgnoreCase("create"))) {
-            if (conference.getId() == 0){
+        if (type.equalsIgnoreCase("create")) {
+            if (conference.getId() == 0) {
                 createConference(conference);
             }
         }
@@ -90,9 +96,11 @@ public class AdministrationService implements DBActionsService {
         } else {
             conference = new Conference();
         }
+
         if (params.get("theme") != null) {
             conference.setTheme(params.get("theme"));
         }
+
         if (params.get("plannedDateTime") != null) {
             String[] dateTime = params.get("plannedDateTime").split("T");
             String[] date = dateTime[0].split("-");
@@ -104,6 +112,7 @@ public class AdministrationService implements DBActionsService {
                     Integer.parseInt(time[1]),
                     Integer.parseInt(time[2])));
         }
+
         if (params.get("happenedDateTime") != null) {
             String[] dateTime = params.get("happenedDateTime").split("T");
             String[] date = dateTime[0].split("-");
@@ -115,9 +124,11 @@ public class AdministrationService implements DBActionsService {
                     Integer.parseInt(time[1]),
                     Integer.parseInt(time[2])));
         }
+
         if (params.get("address") != null) {
             conference.setAddress(params.get("address"));
         }
+
         return conference;
     }
 }

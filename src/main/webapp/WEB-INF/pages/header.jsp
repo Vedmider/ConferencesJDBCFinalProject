@@ -30,6 +30,8 @@
                         <li class="nav-item"><a class="nav-link" href="about"><fmt:message key="header.about"/></a></li>
                         <c:if test="${sessionScope.user != null}">
                         <li class="nav-item"><a class="nav-link" href="speakers"><fmt:message key="header.speakers"/></a>
+                            </c:if>
+                        <c:if test="${sessionScope.user != null && (sessionScope.role == 'ADMIN' || sessionScope.role == 'MODERATOR' || sessionScope.role == 'SPEAKER')}">
                         <li class="nav-item"><a class="nav-link" href="administration"><fmt:message key="header.administration"/></a>
                         </c:if>
                         <c:if test="${sessionScope.user == null}">

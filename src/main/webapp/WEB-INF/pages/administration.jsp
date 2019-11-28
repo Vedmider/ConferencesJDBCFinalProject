@@ -85,8 +85,9 @@
 						</div>
 						</c:forEach>
 					</div>
+				<c:if test="${sessionScope.role == 'ADMIN'}">
 				Create/Update Conference
-				<form action="db-action" id="db-action-form">
+				<form action="db-action" id="db-action-form" onsubmit="return conferenceValidate()">
 					<label for="id">ID</label>
 					<input type="text" name="id" id="id" value=""><br>
 					<label for="theme">Theme</label>
@@ -96,12 +97,13 @@
 					<label for="happenedDateTime">Happened date</label>
 					<input type="datetime-local" name="happenedDateTime" id="happenedDateTime" value="" ><br><br>
 					<label for="type">Type of operation</label>
-					<select id="type">
+					<select name="type" id="type" required>
 						<option value="create">Create</option>
 						<option value="update">Update</option>
 					</select>
-					<input type="submit" value="Submit">
+					<input type="submit" id="conference-submit" value="Submit">
 				</form>
+				</c:if>
 			<c:forEach items="${sessionScope.conferences}" var="conference">
 				<h3>Conference: </h3> <c:out value="${conference.theme}"/>
 				<h3>Reports</h3>
@@ -135,7 +137,7 @@
 								<c:out value="${report.title}"/>
 							</div>
 							<div class="cell" data-title="Speaker">
-								<c:set var="fullName" value="${report.speaker.firstName}  ${report.speaker.lastName}"/>
+								<c:set var="fullName" value="${report.speaker.id} ${report.speaker.firstName}  ${report.speaker.lastName}"/>
 								<c:out value="${fullName}"/>
 							</div>
 							<div class="cell" data-title="Time start">
@@ -147,33 +149,112 @@
 							<div class="cell" data-title="Attended">
 								<c:out value="${report.attended}"/>
 							</div>
+							<c:if test="${sessionScope.role == 'ADMIN'}">
+								<div class="cell" data-title="Delete">
+									<a href="db-action?entity=report&type=delete&id=<c:out value="${report.id}"/>">Delete</a>
+								</div>
+							</c:if>
 						</div>
 					</c:forEach>
-				</c:forEach>
-			</div>
+				</div>
+				<c:if test="${sessionScope.role == 'ADMIN'}">
+				Create/Update Report
+				<form action="db-action" id="db-action-form" onsubmit="return reportValidate()">
+					<label for="id">ID</label>
+					<input type="text" name="id" id="report-id" value=""><br>
+					<label for="title">Title</label>
+					<input type="text" name="title" id="title" value="" ><br>
+					<label for="timeStart">Start time</label>
+					<input type="time-local" name="timeStart" id="timeStart" value="" ><br><br>
+					<label for="speaker">Speaker ID</label>
+					<input type="text" name="speaker" id="speaker" value="" ><br><br>
+					<label for="registered">Number of registered</label>
+					<input type="number" name="registered" id="registered" value="" ><br><br>
+					<label for="attended">Number of attended</label>
+					<input type="number" name="attended" id="attended" value="" ><br><br>
+					<input type="number" name="conferenceId" id="conferenceId" value="" hidden><br><br>
+					<label for="type">Type of operation</label>
+					<select name="type" id="report-operation-type" required>
+						<option value="create">Create</option>
+						<option value="update">Update</option>
+					</select>
+					<input type="submit" id="report-submit" value="Submit">
+				</form>
+				</c:if>
+			</c:forEach>
 		</div>
 	</div>
 	</c:if>
 	<c:if test="${sessionScope.speakers != null}">
-		<table>
-			<tr>
-				<th>ID</th>
-				<th>Full name</th>
-				<th>Address</th>
-				<th>Planned date</th>
-			</tr>
+		<div class="table">
+			<div class="row header">
+				<div class="cell">
+					ID
+				</div>
+				<div class="cell">Full name</div>
+				<div class="cell">Address</div>
+				<div class="cell">Planned date</div>
+				<c:if test="${sessionScope.role == 'ADMIN'}">
+					<div class="cell">Delete</div>
+				</c:if>
+			</div>
 		<c:forEach items="${sessionScope.speakers}" var="speaker">
-			<tr>
-				<td><c:out value="${speaker.id}"/></td>
-				<td><c:set var="fullName" value="${speaker.firstName}  ${speaker.lastName}"/>
-					<c:out value="${fullName}"/></td>
-				<td><c:out value="${speaker.email}"/></td>
-				<td><c:out value="${speaker.rating}"/></td>
-				<td><c:out value="${speaker.bonuses}"/></td>
-			</tr>
+			<div class="row">
+				<div class="cell" data-title="id">
+					<c:out value="${speaker.id}"/>
+				</div>
+				<div class="cell" data-title="fullName">
+					<c:set var="fullName" value="${speaker.firstName}  ${speaker.lastName}"/>
+					<c:out value="${fullName}"/>
+				</div>
+				<div class="cell" data-title="email">
+					<c:out value="${speaker.email}"/>
+				</div>
+				<div class="cell" data-title="rating">
+					<c:out value="${speaker.rating}"/>
+				</div>
+				<div class="cell" data-title="bonuses">
+					<c:out value="${speaker.bonuses}"/>
+				</div>
+				<c:if test="${sessionScope.role == 'ADMIN'}">
+					<div class="cell" data-title="Delete">
+						<a href="db-action?entity=speaker&type=delete&id=<c:out value="${speaker.id}"/>">Delete</a>
+					</div>
+				</c:if>
+			</div>
 		</c:forEach>
-		</table>
+		</div>
+		<c:if test="${sessionScope.role == 'ADMIN' || sessionScope.role == 'MODERATOR'}">
+		Create/Update Speaker
+		<form class="table-active" action="db-action" id="db-action-form" onsubmit="return speakerValidate()">
+			<label for="id">ID</label>
+			<input type="text" name="id" id="speaker-id" value=""><br>
+			<label for="login">Login</label>
+			<input type="text" name="login" id="login" value="" ><br>
+			<label for="password">Password</label>
+			<input type="time-local" name="password" id="password" value="" ><br><br>
+
+			<label for="firstName">First Name</label>
+			<input type="text" name="firstName" id="firstName" value="" ><br><br>
+
+			<label for="lastName">Last Name</label>
+			<input type="text" name="lastName" id="lastName" value="" ><br><br>
+			<label for="email">Email</label>
+			<input type="email" name="email" id="email" value="" ><br><br>
+			<label for="email">Role ID</label>
+			<input type="number" name="userRole" id="userRole" value="" ><br><br>
+			<label for="type">Type of operation</label>
+			<select name="type" id="speaker-operation-type" required>
+				<c:if test="${sessionScope.role == 'MODERATOR'}">
+					<option value="create">Create</option>
+				</c:if>
+				<option value="update">Update</option>
+			</select>
+			<input type="submit" id="speaker-submit" value="Submit">
+		</form>
+		</c:if>
 	</c:if>
+	<c:if test="${sessionScope.role == 'ADMIN' || sessionScope.role == 'MODERATOR'}">
 	<c:if test="${sessionScope.users != null}">
 	<div class="limiter">
 		<div class="container-table100">
@@ -195,6 +276,9 @@
 						<div class="cell">
 							Role
 						</div>
+						<c:if test="${sessionScope.role == 'ADMIN'}">
+							<div class="cell">Delete</div>
+						</c:if>
 					</div>
 					<c:forEach items="${sessionScope.users}" var="user">
 						<div class="row">
@@ -214,12 +298,44 @@
 							<div class="cell" data-title="Address">
 								<c:out value="${user.role.roleTitle}"/>
 							</div>
+							<c:if test="${sessionScope.role == 'ADMIN'}">
+								<div class="cell" data-title="Delete">
+									<a href="db-action?entity=user&type=delete&id=<c:out value="${user.id}"/>">Delete</a>
+								</div>
+							</c:if>
 						</div>
 					</c:forEach>
 				</div>
+				<c:if test="${sessionScope.role == 'ADMIN'}">
+					<form class="table-active" action="db-action" id="db-action-form" onsubmit="return speakerValidate()">
+						<label for="id">ID</label>
+						<input type="text" name="id" id="user-id" value=""><br>
+						<label for="login">Login</label>
+						<input type="text" name="login" id="user-login" value="" ><br>
+						<label for="password">Password</label>
+						<input type="time-local" name="password" id="user-password" value="" ><br><br>
+
+						<label for="firstName">First Name</label>
+						<input type="text" name="firstName" id="user-firstName" value="" ><br><br>
+
+						<label for="lastName">Last Name</label>
+						<input type="text" name="lastName" id="user-lastName" value="" ><br><br>
+						<label for="email">Email</label>
+						<input type="email" name="email" id="user-email" value="" ><br><br>
+						<label for="email">Role ID</label>
+						<input type="number" name="userRole" id="Role" value="" ><br><br>
+						<label for="type">Type of operation</label>
+						<select name="type" id="user-operation-type" required>
+							<option value="create">Create</option>
+							<option value="update">Update</option>
+						</select>
+						<input type="submit" id="user-submit" value="Submit">
+					</form>
+				</c:if>
 			</div>
 		</div>
 	</div>
+	</c:if>
 	</c:if>
 
 <!--===============================================================================================-->	
@@ -231,6 +347,85 @@
 	<script src="ui/administration-page-resources/vendor/select2/select2.min.js"></script>
 <!--===============================================================================================-->
 	<script src="ui/administration-page-resources/js/main.js"></script>
+	<script type="text/javascript">
+		function conferenceValidate() {
+
+			let id = document.getElementById("id").value;
+			let theme = document.getElementById("theme").value;
+			let plannedDateTime = document.getElementById("plannedDateTime").value;
+			let type = document.getElementById("type").value;
+
+			if (type == 'update'){
+				if (id == ''){
+					alert("ID cannot be empty during update")
+					return false;
+				}
+				return true;
+			} else if (type == 'create') {
+				if (id != ''){
+					alert("ID cannot be filled in during create")
+					return false;
+				}
+				if (theme == '' || plannedDateTime == ''){
+					alert("Theme and planned date should not be empty")
+					return false;
+				}
+			}
+			return true;
+		}
+
+		function reportValidate() {
+
+			let id = document.getElementById("report-id").value;
+			let title = document.getElementById("title").value;
+			let timeStart = document.getElementById("timeStart").value;
+			let type = document.getElementById("type").value;
+
+			if (type == 'update'){
+				if (id == ''){
+					alert("ID cannot be empty during update")
+					return false;
+				}
+				return true;
+			} else if (type == 'create') {
+				if (id != ''){
+					alert("ID cannot be filled in during create")
+					return false;
+				}
+				if (title == '' || timeStart == ''){
+					alert("Title and time of start  date should not be empty")
+					return false;
+				}
+			}
+			return true;
+		}
+
+		function speakerValidate() {
+
+			let id = document.getElementById("id").value;
+			let theme = document.getElementById("theme").value;
+			let plannedDateTime = document.getElementById("plannedDateTime").value;
+			let type = document.getElementById("type").value;
+
+			if (type == 'update'){
+				if (id == ''){
+					alert("ID cannot be empty during update")
+					return false;
+				}
+				return true;
+			} else if (type == 'create') {
+				if (id != ''){
+					alert("ID cannot be filled in during create")
+					return false;
+				}
+				if (theme == '' || plannedDateTime == ''){
+					alert("Theme and planned date should not be empty")
+					return false;
+				}
+			}
+			return true;
+		}
+	</script>
 
 </body>
 </html>

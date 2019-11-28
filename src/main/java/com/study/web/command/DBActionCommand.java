@@ -47,12 +47,16 @@ public class DBActionCommand implements Command {
 
     private DBActionsService getService(String serviceType) {
         if (serviceType.equalsIgnoreCase("conference")) {
+            LOG.info("Returning administration Service in DB Action Command");
             return administrationService;
         } else if (serviceType.equalsIgnoreCase("report")) {
+            LOG.info("Returning report Service in DB Action Command");
             return reportService;
         } else if (serviceType.equalsIgnoreCase("user")) {
+            LOG.info("Returning user Service in DB Action Command");
             return userService;
         } else if (serviceType.equalsIgnoreCase("speaker")) {
+            LOG.info("Returning speaker Service in DB Action Command");
             return speakerService;
         }
         return null;

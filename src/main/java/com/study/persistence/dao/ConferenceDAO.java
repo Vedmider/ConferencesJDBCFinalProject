@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class ConferenceDAO extends AbstractDao<Conference> {
-    private static final String COUNT_ROWS = "SELECT COUNT(1) FROM conferences";
     private static final String SELECT_ALL_FROM_CONFERENCES = "SELECT * FROM conferences";
     private static final String INSERT_INTO_CONFERENCES = "INSERT INTO conferences(theme, date_time_planned, date_time_happened, address) "
             + "VALUE (?,?,?,?)";
