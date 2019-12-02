@@ -28,7 +28,7 @@
                     <ul class="nav navbar-nav menu_nav ml-auto">
                         <li class="nav-item active"><a class="nav-link" href="index"><fmt:message key="header.home"/></a></li>
                         <li class="nav-item"><a class="nav-link" href="about"><fmt:message key="header.about"/></a></li>
-                        <c:if test="${sessionScope.user != null}">
+                        <c:if test="${sessionScope.user != null && sessionScope.role == 'USER'}">
                         <li class="nav-item"><a class="nav-link" href="speakers"><fmt:message key="header.speakers"/></a>
                             </c:if>
                         <c:if test="${sessionScope.user != null && (sessionScope.role == 'ADMIN' || sessionScope.role == 'MODERATOR' || sessionScope.role == 'SPEAKER')}">

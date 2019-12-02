@@ -74,16 +74,22 @@ public class AdministrationService implements DBActionsService {
         if (type.equalsIgnoreCase("delete")) {
             if (conference.getId() != 0) {
                 deleteConference(conference);
+            } else {
+                LOG.info("Conference ID 0. Could not perform delete");
             }
         }
         if (type.equalsIgnoreCase("update")) {
             if (conference.getId() != 0) {
                 updateConference(conference);
+            } else {
+                LOG.info("Conference ID 0. Could not perform update");
             }
         }
         if (type.equalsIgnoreCase("create")) {
             if (conference.getId() == 0) {
                 createConference(conference);
+            } else {
+                LOG.info("Conference ID not 0. New Report would not be created");
             }
         }
     }

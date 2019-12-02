@@ -57,16 +57,22 @@ public class ReportService implements DBActionsService {
         if (type.equalsIgnoreCase("delete")) {
             if (report.getId() != 0) {
                 deleteReport(report);
+            } else {
+                LOG.info("Report ID 0. Could not perform delete");
             }
         }
         if (type.equalsIgnoreCase("update")) {
             if (report.getId() != 0) {
                 updateReport(report);
+            } else {
+                LOG.info("Report ID 0. Could not perform update");
             }
         }
         if (type.equalsIgnoreCase("create")) {
             if (report.getId() == 0) {
                 createReport(report);
+            } else {
+                LOG.info("Report ID not 0. New Report would not be created");
             }
         }
 

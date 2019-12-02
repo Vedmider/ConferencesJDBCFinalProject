@@ -32,12 +32,13 @@
 <!--===============================================================================================-->
 </head>
 <body>
+
 <c:import url="header.jsp" />
 	<c:if test="${sessionScope.conferences != null}">
-	<div class="limiter">
 		<div class="container-table100">
 			<div class="wrap-table100">
-					<div class="table">
+				<h3>Conferences</h3>
+				<div class="table">
 						<div class="row header">
 							<div class="cell">
 								ID
@@ -89,13 +90,13 @@
 				Create/Update Conference
 				<form action="db-action" id="db-action-form" onsubmit="return conferenceValidate()">
 					<label for="id">ID</label>
-					<input type="text" name="id" id="id" value=""><br>
+					<input type="text" name="id" id="id" value="">
 					<label for="theme">Theme</label>
-					<input type="text" name="theme" id="theme" value="" ><br>
+					<input type="text" name="theme" id="theme" value="" >
 					<label for="plannedDateTime">Planned date</label>
-					<input type="datetime-local" name="plannedDateTime" id="plannedDateTime" value="" ><br><br>
+					<input type="datetime-local" name="plannedDateTime" id="plannedDateTime" value="" >
 					<label for="happenedDateTime">Happened date</label>
-					<input type="datetime-local" name="happenedDateTime" id="happenedDateTime" value="" ><br><br>
+					<input type="datetime-local" name="happenedDateTime" id="happenedDateTime" value="" >
 					<label for="type">Type of operation</label>
 					<select name="type" id="type" required>
 						<option value="create">Create</option>
@@ -105,7 +106,8 @@
 				</form>
 				</c:if>
 			<c:forEach items="${sessionScope.conferences}" var="conference">
-				<h3>Conference: </h3> <c:out value="${conference.theme}"/>
+				<br><br>
+				<h3>Conference: <c:out value="${conference.theme}"/></h3><br>
 				<h3>Reports</h3>
 				<div class="table">
 					<div class="row header">
@@ -127,7 +129,11 @@
 						<div class="cell">
 							Number of attended
 						</div>
+						<c:if test="${sessionScope.role == 'ADMIN'}">
+							<div class="cell">Delete</div>
+						</c:if>
 					</div>
+					<br>
 					<c:forEach items="${conference.reports}" var="report">
 						<div class="row">
 							<div class="cell" data-title="ID">
@@ -156,23 +162,23 @@
 							</c:if>
 						</div>
 					</c:forEach>
-				</div>
+				</div><br>
 				<c:if test="${sessionScope.role == 'ADMIN'}">
 				Create/Update Report
 				<form action="db-action" id="db-action-form" onsubmit="return reportValidate()">
 					<label for="id">ID</label>
-					<input type="text" name="id" id="report-id" value=""><br>
+					<input type="text" name="id" id="report-id" value="">
 					<label for="title">Title</label>
-					<input type="text" name="title" id="title" value="" ><br>
+					<input type="text" name="title" id="title" value="" >
 					<label for="timeStart">Start time</label>
-					<input type="time-local" name="timeStart" id="timeStart" value="" ><br><br>
+					<input type="time-local" name="timeStart" id="timeStart" value="" >
 					<label for="speaker">Speaker ID</label>
-					<input type="text" name="speaker" id="speaker" value="" ><br><br>
+					<input type="text" name="speaker" id="speaker" value="" >
 					<label for="registered">Number of registered</label>
-					<input type="number" name="registered" id="registered" value="" ><br><br>
+					<input type="number" name="registered" id="registered" value="" >
 					<label for="attended">Number of attended</label>
-					<input type="number" name="attended" id="attended" value="" ><br><br>
-					<input type="number" name="conferenceId" id="conferenceId" value="" hidden><br><br>
+					<input type="number" name="attended" id="attended" value="" >
+					<input type="number" name="conferenceId" id="conferenceId" value="" hidden>
 					<label for="type">Type of operation</label>
 					<select name="type" id="report-operation-type" required>
 						<option value="create">Create</option>
@@ -182,18 +188,20 @@
 				</form>
 				</c:if>
 			</c:forEach>
-		</div>
-	</div>
+		</div><br>
 	</c:if>
 	<c:if test="${sessionScope.speakers != null}">
-		<div class="table">
+			<div class="container-table100">
+				<div class="wrap-table100">
+			<div class="table">
 			<div class="row header">
 				<div class="cell">
 					ID
 				</div>
 				<div class="cell">Full name</div>
-				<div class="cell">Address</div>
-				<div class="cell">Planned date</div>
+				<div class="cell">Email</div>
+				<div class="cell">Rating</div>
+				<div class="cell">Bonuses</div>
 				<c:if test="${sessionScope.role == 'ADMIN'}">
 					<div class="cell">Delete</div>
 				</c:if>
@@ -224,40 +232,45 @@
 			</div>
 		</c:forEach>
 		</div>
+		</div>
+		</div><br>
 		<c:if test="${sessionScope.role == 'ADMIN' || sessionScope.role == 'MODERATOR'}">
 		Create/Update Speaker
-		<form class="table-active" action="db-action" id="db-action-form" onsubmit="return speakerValidate()">
+		<form class="table" action="db-action" id="db-action-form" onsubmit="return speakerValidate()">
 			<label for="id">ID</label>
-			<input type="text" name="id" id="speaker-id" value=""><br>
+			<input type="text" name="id" id="speaker-id" value="">
 			<label for="login">Login</label>
-			<input type="text" name="login" id="login" value="" ><br>
+			<input type="text" name="login" id="login" value="" >
 			<label for="password">Password</label>
-			<input type="time-local" name="password" id="password" value="" ><br><br>
-
+			<input type="text" name="password" id="password" value="" >
 			<label for="firstName">First Name</label>
-			<input type="text" name="firstName" id="firstName" value="" ><br><br>
-
+			<input type="text" name="firstName" id="firstName" value="" >
 			<label for="lastName">Last Name</label>
-			<input type="text" name="lastName" id="lastName" value="" ><br><br>
+			<input type="text" name="lastName" id="lastName" value="" >
 			<label for="email">Email</label>
-			<input type="email" name="email" id="email" value="" ><br><br>
-			<label for="email">Role ID</label>
-			<input type="number" name="userRole" id="userRole" value="" ><br><br>
+			<input type="email" name="email" id="email" value="" >
+			<label for="speakerRole">Role</label>
+			<select name="userRole" id="speakerRole" required>
+				<option value="1">ADMIN</option>
+				<option value="3">MODERATOR</option>
+				<option value="4">SPEAKER</option>
+				<option value="5">USER</option>
+			</select>
 			<label for="type">Type of operation</label>
 			<select name="type" id="speaker-operation-type" required>
-				<c:if test="${sessionScope.role == 'MODERATOR'}">
+				<c:if test="${sessionScope.role == 'MODERATOR' || sessionScope.role == 'ADMIN'}">
 					<option value="create">Create</option>
 				</c:if>
 				<option value="update">Update</option>
 			</select>
 			<input type="submit" id="speaker-submit" value="Submit">
-		</form>
+		</form><br>
 		</c:if>
 	</c:if>
 	<c:if test="${sessionScope.role == 'ADMIN' || sessionScope.role == 'MODERATOR'}">
 	<c:if test="${sessionScope.users != null}">
-	<div class="limiter">
-		<div class="container-table100">
+		<h3>Users</h3><br>
+			<div class="container-table100">
 			<div class="wrap-table100">
 				<div class="table">
 					<div class="row header">
@@ -305,25 +318,29 @@
 							</c:if>
 						</div>
 					</c:forEach>
-				</div>
+				</div><br>
 				<c:if test="${sessionScope.role == 'ADMIN'}">
-					<form class="table-active" action="db-action" id="db-action-form" onsubmit="return speakerValidate()">
+					<h3>Create/Update User</h3>
+					<form class="table-active" action="db-action" id="db-action-form" onsubmit="return userValidate()">
 						<label for="id">ID</label>
-						<input type="text" name="id" id="user-id" value=""><br>
+						<input type="text" name="id" id="user-id" value="">
 						<label for="login">Login</label>
-						<input type="text" name="login" id="user-login" value="" ><br>
+						<input type="text" name="login" id="user-login" value="" >
 						<label for="password">Password</label>
-						<input type="time-local" name="password" id="user-password" value="" ><br><br>
-
+						<input type="text" name="password" id="user-password" value="" >
 						<label for="firstName">First Name</label>
-						<input type="text" name="firstName" id="user-firstName" value="" ><br><br>
-
+						<input type="text" name="firstName" id="user-firstName" value="">
 						<label for="lastName">Last Name</label>
-						<input type="text" name="lastName" id="user-lastName" value="" ><br><br>
+						<input type="text" name="lastName" id="user-lastName" value="" >
 						<label for="email">Email</label>
-						<input type="email" name="email" id="user-email" value="" ><br><br>
-						<label for="email">Role ID</label>
-						<input type="number" name="userRole" id="Role" value="" ><br><br>
+						<input type="email" name="email" id="user-email" value="" >
+						<label for="userRole">Role</label>
+						<select name="userRole" id="userRole" required>
+							<option value="1">ADMIN</option>
+							<option value="3">MODERATOR</option>
+							<option value="4">SPEAKER</option>
+							<option value="5">USER</option>
+						</select>
 						<label for="type">Type of operation</label>
 						<select name="type" id="user-operation-type" required>
 							<option value="create">Create</option>
@@ -334,7 +351,6 @@
 				</c:if>
 			</div>
 		</div>
-	</div>
 	</c:if>
 	</c:if>
 

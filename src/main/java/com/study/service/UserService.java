@@ -4,16 +4,21 @@ import com.study.persistence.dao.RoleDAO;
 import com.study.persistence.dao.UserDAO;
 import com.study.persistence.entity.User;
 import com.study.persistence.mapper.EntityDTOMapper;
+import com.study.web.DTO.RoleDTO;
 import com.study.web.DTO.UserDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.study.persistence.mapper.EntityDTOMapper.mapUser;
 import static com.study.web.constant.ContentConstants.USER;
 
 public class UserService implements DBActionsService {
+    private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
     private static final UserDAO userDAO = new UserDAO();
     private static final RoleDAO roleDAO = new RoleDAO();
 
@@ -68,6 +73,7 @@ public class UserService implements DBActionsService {
                 : Optional.empty();
     }
 
+
     private Optional<Integer> getUserRoleId() {
         return roleDAO.getAll()
                 .stream()
@@ -88,12 +94,81 @@ public class UserService implements DBActionsService {
 
     public List<UserDTO> getAll() {
         return userDAO.getAll().stream()
-                .map(user -> EntityDTOMapper.mapUser(user, roleDAO.getById(user.getId())))
+                .map(user -> EntityDTOMapper.mapUser(user, roleDAO.getById(user.getId()), roleDAO.getRoleRights(user.getId())))
                 .collect(Collectors.toList());
+    }
+
+    public boolean deleteUser(User user) {
+        return userDAO.delete(user);
+    }
+
+    public boolean updateUser(User user) {
+        return userDAO.update(user);
+    }
+
+    public int createUser(User user) {
+        return userDAO.create(user);
     }
 
     @Override
     public void perform(Map<String, String> params) {
+        String type = params.get("type");
+        User user = mapUserFromParams(params);
 
+        LOG.info("DB Action type: " + type);
+        if (type.equalsIgnoreCase("delete")) {
+            if (user.getId() != 0) {
+                deleteUser(user);
+            } else {
+                LOG.info("Speaker ID 0. Could not perform delete");
+            }
+        }
+        if (type.equalsIgnoreCase("update")) {
+            if (user.getId() != 0) {
+                updateUser(user);
+            } else {
+                LOG.info("Speaker ID 0. Could not perform update");
+            }
+        }
+        if (type.equalsIgnoreCase("create")) {
+            if (user.getId() == 0) {
+                createUser(user);
+            }
+        } else {
+            LOG.info("Speaker ID not 0. New Report would not be created");
+        }
+    }
+
+    private User mapUserFromParams(Map<String, String> params) {
+        User user;
+
+        if (params.get("id") != null) {
+            user = userDAO.getById(Integer.parseInt(params.get("id")));
+        } else {
+            user = new User();
+        }
+
+        if (params.get("login") != null) {
+            user.setLogin(params.get("login"));
+        }
+        if (params.get("password") != null) {
+            user.setPassword(params.get("password"));
+        }
+        if (params.get("firstName") != null) {
+            user.setFirstName(params.get("firstName"));
+        }
+        if (params.get("lastName") != null) {
+            user.setLastName(params.get("lastName"));
+        }
+        if (params.get("email") != null) {
+            user.setEmail(params.get("email"));
+        }
+        if (params.get("userRole") != null) {
+            user.setUserRole(Integer
+                    .parseInt(params
+                            .get("userRole")));
+        }
+
+        return user;
     }
 }

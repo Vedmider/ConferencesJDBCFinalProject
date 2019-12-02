@@ -23,7 +23,7 @@ public class PostLogInCommand implements Command {
         UserDTO userDTO = loginService.performLogin(login, password);
 
         if (userDTO != null) {
-            LOG.info("User ID: {} successfully logged in.", userDTO.getId());
+            LOG.info("User ID: {} successfully logged in. User has ROLE: {}", userDTO.getId(), userDTO.getRole().toString());
             request.getSession().setAttribute(USER, userDTO);
             request.getSession().setAttribute(ROLE, userDTO.getRole().getRoleTitle().toUpperCase());
             return new Page(SLASH_INDEX, true);

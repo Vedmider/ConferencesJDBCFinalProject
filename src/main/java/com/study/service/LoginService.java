@@ -1,40 +1,30 @@
 package com.study.service;
 
-import com.study.persistence.dao.RoleDAO;
-import com.study.persistence.dao.UserDAO;
-import com.study.persistence.entity.User;
-import com.study.persistence.mapper.EntityDTOMapper;
 import com.study.web.DTO.UserDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
 
-public class LoginService implements DBActionsService{
+public class LoginService {
     private static final Logger LOG = LoggerFactory.getLogger(LoginService.class);
-    private static final UserDAO userDAO = new UserDAO();
-    private static final RoleDAO roleDAO = new RoleDAO();
+    private static final AdministrationService administrationService = new AdministrationService();
 
     public UserDTO performLogin (String login, String password){
-        User userEntity= getUserEntity(login, password);
+        UserDTO user = getUserDTO(login, password);
 
-        if (userEntity != null){
-            LOG.info("userEntity login {} password {} id {}", userEntity.getLogin(), userEntity.getPassword(), userEntity.getId());
-            return EntityDTOMapper.mapUser(userEntity, roleDAO.getById(userEntity.getId()));
+        if (user != null){
+            LOG.info("userEntity login {} password {} id {}", user.getLogin(), user.getPassword(), user.getId());
+            return user;
         }
         return null;
     }
 
-    private User getUserEntity(String login, String password){
-        return  userDAO.getAll()
+    private UserDTO getUserDTO(String login, String password){
+        return  administrationService.getAllUsers()
                 .stream()
                 .filter(user -> user.getLogin().equalsIgnoreCase(login))
                 .filter(user -> user.getPassword().equals(password))
                 .findAny().orElse(null);
     }
 
-    @Override
-    public void perform(Map<String, String> params) {
-
-    }
 }
