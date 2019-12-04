@@ -36,7 +36,7 @@ public class SpeakerService implements DBActionsService {
         return EntityDTOMapper.mapSpeaker(speaker, roleDao.getById(speaker.getUserRole()), roleDao.getRoleRights(speaker.getUserRole()));
     }
 
-    public boolean deleteSpeaer(Speaker speaker) {
+    public boolean deleteSpeaker(Speaker speaker) {
         return speakerDAO.delete(speaker);
     }
 
@@ -60,7 +60,7 @@ public class SpeakerService implements DBActionsService {
         LOG.info("DB Action type: " + type);
         if (type.equalsIgnoreCase("delete")) {
             if (speaker.getId() != 0) {
-                deleteSpeaer(speaker);
+                deleteSpeaker(speaker);
             } else {
                 LOG.info("Speaker ID 0. Could not perform delete");
             }

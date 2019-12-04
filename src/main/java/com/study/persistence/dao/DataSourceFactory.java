@@ -44,8 +44,4 @@ public class DataSourceFactory {
         return connection;
     }
 
-    public static PreparedStatement getPreparedStatement (String query) throws SQLException {
-        return getConnection().prepareStatement(query);
-    }
-
 }

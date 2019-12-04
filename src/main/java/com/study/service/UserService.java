@@ -94,7 +94,7 @@ public class UserService implements DBActionsService {
 
     public List<UserDTO> getAll() {
         return userDAO.getAll().stream()
-                .map(user -> EntityDTOMapper.mapUser(user, roleDAO.getById(user.getId()), roleDAO.getRoleRights(user.getId())))
+                .map(user -> EntityDTOMapper.mapUser(user, roleDAO.getById(user.getUserRole()), roleDAO.getRoleRights(user.getUserRole())))
                 .collect(Collectors.toList());
     }
 
@@ -120,14 +120,14 @@ public class UserService implements DBActionsService {
             if (user.getId() != 0) {
                 deleteUser(user);
             } else {
-                LOG.info("Speaker ID 0. Could not perform delete");
+                LOG.info("User ID 0. Could not perform delete");
             }
         }
         if (type.equalsIgnoreCase("update")) {
             if (user.getId() != 0) {
                 updateUser(user);
             } else {
-                LOG.info("Speaker ID 0. Could not perform update");
+                LOG.info("User ID 0. Could not perform update");
             }
         }
         if (type.equalsIgnoreCase("create")) {
@@ -135,7 +135,7 @@ public class UserService implements DBActionsService {
                 createUser(user);
             }
         } else {
-            LOG.info("Speaker ID not 0. New Report would not be created");
+            LOG.info("User ID not 0. New Report would not be created");
         }
     }
 
@@ -143,6 +143,7 @@ public class UserService implements DBActionsService {
         User user;
 
         if (params.get("id") != null) {
+            LOG.info("Setting User ID to {}", params.get("id"));
             user = userDAO.getById(Integer.parseInt(params.get("id")));
         } else {
             user = new User();

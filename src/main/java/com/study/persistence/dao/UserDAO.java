@@ -21,6 +21,7 @@ public class UserDAO extends AbstractDao<User> {
         LOG.info("Getting User entity ID {}", id);
         return selectFromDB(SELECT_FROM_USERS + id, resultSet -> {
             User user = new User();
+            user.setId(id);
             user.setLogin(resultSet.getString("login"));
             user.setPassword(resultSet.getString("user_password"));
             user.setFirstName(resultSet.getString("first_name"));

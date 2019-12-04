@@ -17,7 +17,7 @@ public abstract class AbstractDao<T> implements CRUDInterface<T> {
     public List<T> selectFromDB(String query, EntityMapper<T> mapper) {
         List<T> result = new ArrayList<>();
 
-        try (PreparedStatement preparedStatement = DataSourceFactory.getPreparedStatement(query);
+        try (PreparedStatement preparedStatement = DataSourceFactory.getConnection().prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
@@ -35,7 +35,7 @@ public abstract class AbstractDao<T> implements CRUDInterface<T> {
 
 
     public boolean update(String query, StatementMapper statementMapper) {
-        try (PreparedStatement preparedStatement = DataSourceFactory.getPreparedStatement(query)) {
+        try (PreparedStatement preparedStatement = DataSourceFactory.getConnection().prepareStatement(query)) {
             statementMapper.map(preparedStatement);
 
             int result = preparedStatement.executeUpdate();
@@ -48,23 +48,10 @@ public abstract class AbstractDao<T> implements CRUDInterface<T> {
         return false;
     }
 
-//    public int countRows(String query, StatementMapper statementMapper) {
-//        try (PreparedStatement preparedStatement = DataSourceFactory.getPreparedStatement(query)) {
-//            statementMapper.map(preparedStatement);
-//
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//
-//            return resultSet.getInt(0);
-//        } catch (SQLException e) {
-//            LOG.error("Could not create entity!!", e);
-//        }
-//
-//        return 0;
-//    }
 
     public int create(String query, StatementMapper statementMapper) {
         int result = -1;
-        try (PreparedStatement preparedStatement = DataSourceFactory.getPreparedStatement(query)) {
+        try (PreparedStatement preparedStatement = DataSourceFactory.getConnection().prepareStatement(query)) {
             statementMapper.map(preparedStatement);
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
