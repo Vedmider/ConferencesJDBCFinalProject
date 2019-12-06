@@ -7,6 +7,8 @@ import com.study.web.DTO.ReportDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
@@ -81,37 +83,50 @@ public class ReportService implements DBActionsService {
     private Report mapReportFromParams(Map<String, String> params) {
         Report report;
 
-        if (params.get("id") != null) {
+        if (params.get("id") != null && !params.get("id").equals("")) {
             report = reportDAO.getById(Integer.parseInt(params.get("id")));
         } else {
             report = new Report();
         }
-        if (params.get("title") != null) {
+        if (params.get("title") != null && !params.get("title").equals("")) {
             report.setTitle(params
                     .get("title"));
         }
-        if (params.get("timeStart") != null) {
-            String[] time = params.get("timeStart").split(":");
+        if (params.get("timeStart") != null && !params.get("timeStart").equals("")) {
+            String[] time = getTimeFromParameter(params.get("timeStart"));
             report.setTimeStart(LocalTime
                     .of(Integer.parseInt(time[0]), Integer.parseInt(time[1])));
         }
-        if (params.get("speakerId") != null) {
+        if (params.get("speakerId") != null && !params.get("speakerId").equals("")) {
             report.setSpeakerId(Integer
                     .parseInt(params
                             .get("speakerId")));
         }
         report.setConferenceId(Integer.parseInt(params.get("conferenceId")));
-        if (params.get("registered") != null) {
+        if (params.get("registered") != null && !params.get("registered").equals("")) {
             report.setRegistered(Integer
                     .parseInt(params
                             .get("registered")));
         }
-        if (params.get("attended") != null) {
+        if (params.get("attended") != null && !params.get("attended").equals("")) {
             report.setRegistered(Integer
                     .parseInt(params
                             .get("attended")));
         }
 
         return report;
+    }
+
+    private String[] getTimeFromParameter(String timeParameter) {
+        String[] time;
+        SimpleDateFormat date12Format = new SimpleDateFormat("hh:mm a");
+        SimpleDateFormat date24Format = new SimpleDateFormat("HH:mm");
+        try {
+            time = date24Format.format(date12Format.parse(timeParameter)).trim().split(":");
+        } catch (ParseException e) {
+            time = new String[]{"00", "00"};
+            LOG.error("Could not parse time parameter", e);
+        }
+        return time;
     }
 }

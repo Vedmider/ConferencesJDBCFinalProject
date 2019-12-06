@@ -10,6 +10,7 @@ import java.util.List;
 public class ReportDAO extends AbstractDao<Report> {
     private static final Logger LOG = LoggerFactory.getLogger(ReportDAO.class);
     private static final String SELECT_ALL_FROM_REPORTS = "SELECT * FROM reports";
+    private static final String SELECT_ALL_LIMITED_FROM_REPORTS = "SELECT * FROM reports ORDER BY conference_id LIMIT ";
     private static final String INSERT_INTO_REPORTS = "INSERT INTO reports(title, time_start, speaker_id, conference_id, registered, attended) "
            + "VALUE (?,?,?,?,?,?)";
     private static final String UPDATE_REPORTS = "UPDATE reports SET title = ?, time_start = ?, speaker_id = ?, conference_id = ?, registered = ?, attended = ? " +
@@ -82,5 +83,18 @@ public class ReportDAO extends AbstractDao<Report> {
         return update(DELETE_FROM_REPORTS, preparedStatement -> {
             preparedStatement.setInt(1, entity.getId());
         });
+    }
+
+    public List<Report> getAll(int startPosition, int limit) {
+        return selectFromDB(SELECT_ALL_LIMITED_FROM_REPORTS + startPosition + ", " + limit, resultSet -> {
+            Report report = new Report();
+            report.setId(resultSet.getInt("id"));
+            report.setConferenceId(resultSet.getInt("conference_id"));
+            report.setTitle(resultSet.getString("title"));
+            report.setTimeStart(resultSet.getTime("time_start").toLocalTime());
+            report.setSpeakerId(resultSet.getInt("speaker_id"));
+            report.setAttended(resultSet.getInt("attended"));
+            report.setRegistered(resultSet.getInt("registered"));
+            return report;});
     }
 }

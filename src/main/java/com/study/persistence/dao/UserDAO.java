@@ -9,6 +9,7 @@ import java.util.List;
 public class UserDAO extends AbstractDao<User> {
     private static final Logger LOG = LoggerFactory.getLogger(UserDAO.class);
     private static final String SELECT_ALL_FROM_USERS = "SELECT * FROM users";
+    private static final String SELECT_ALL_LIMITED_FROM_USERS = "SELECT * FROM users LIMIT ";
     private static final String INSERT_INTO_USERS = "INSERT INTO users( login, user_password, first_name, last_name, email, user_role) " +
             "VALUE (?, ?, ?, ?, ?,?) ";
     private static final String UPDATE_USERS = "UPDATE users SET login = ?, user_password = ?, first_name = ?, last_name = ?, email = ?, user_role = ? " +
@@ -86,6 +87,21 @@ public class UserDAO extends AbstractDao<User> {
         LOG.info("Deleting User entity ID {}", entity.getId());
         return update(DELETE_USER, preparedStatement -> {
             preparedStatement.setInt(1, entity.getId());
+        });
+    }
+
+    public List<User> getAll(int startPosition, int limit) {
+        LOG.info("Getting User all entity from DB");
+        return selectFromDB(SELECT_ALL_LIMITED_FROM_USERS + startPosition + ", " + limit, resultSet -> {
+            User user = new User();
+            user.setId(resultSet.getInt("id"));
+            user.setLogin(resultSet.getString("login"));
+            user.setPassword(resultSet.getString("user_password"));
+            user.setFirstName(resultSet.getString("first_name"));
+            user.setLastName(resultSet.getString("last_name"));
+            user.setEmail(resultSet.getString("email"));
+            user.setUserRole(resultSet.getInt("user_role"));
+            return user;
         });
     }
 }

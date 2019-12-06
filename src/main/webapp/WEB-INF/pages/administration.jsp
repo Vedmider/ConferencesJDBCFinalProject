@@ -98,10 +98,10 @@
                             <label for="theme">Theme</label>
                             <input type="text" name="theme" id="theme" value="">
                             <label for="plannedDate">Planned date</label>
-                            <input type="date" name="plannedDateTime" id="plannedDate" value=""/>
+                            <input type="date" name="plannedDate" id="plannedDate" value=""/>
                             <div>
                             <label for="plannedTime">Planned time</label>
-                            <input type="datetime-local"  name="plannedTime" id="plannedTime" value=""/>
+                            <input type="time"  name="plannedTime" id="plannedTime" value=""/>
                             </div>
                             <div>
                             <label for="happenedDate">Happened date</label>
@@ -116,6 +116,7 @@
                                 <option value="create">Create</option>
                                 <option value="update">Update</option>
                             </select>
+                            <input type="text" name="entity" value="conference" hidden>
                             <input type="submit" id="conference-submit" value="Submit">
                         </form>
                         <br>
@@ -188,7 +189,7 @@
                         <label for="title">Title</label>
                         <input type="text" name="title" id="title" value="">
                         <label for="timeStart">Start time</label>
-                        <input type="time-local" name="timeStart" id="timeStart" value="">
+                        <input type="time" name="timeStart" id="timeStart" value="">
                         <label for="speaker">Speaker ID</label>
                         <input type="text" name="speaker" id="speaker" value="">
                         <label for="registered">Number of registered</label>
@@ -201,6 +202,7 @@
                             <option value="create">Create</option>
                             <option value="update">Update</option>
                         </select>
+                        <input type="text" name="entity" value="report" hidden>
                         <input type="submit" id="report-submit" value="Submit">
                     </form>
                     <br>
@@ -280,6 +282,7 @@
                         </c:if>
                         <option value="update">Update</option>
                     </select>
+                    <input type="text" name="entity" value="speaker" hidden>
                     <input type="submit" id="speaker-submit" value="Submit">
                 </form>
                 <br>
@@ -290,7 +293,6 @@
         <c:if test="${sessionScope.role == 'ADMIN' || sessionScope.role == 'MODERATOR'}">
             <c:if test="${sessionScope.users != null}">
                 <h3>Users</h3>
-
                 <div class="wrap-table100">
                     <div class="table">
                         <div class="row header">
@@ -367,15 +369,21 @@
                             <option value="create">Create</option>
                             <option value="update">Update</option>
                         </select>
+                        <input type="text" name="entity" value="user" hidden>
                         <input type="submit" id="user-submit" value="Submit">
                     </form>
                     <br>
                 </c:if>
-
             </c:if>
         </c:if>
     </div>
 </div>
+<c:if test="${sessionScope.previous != null}">
+    <a href="administration?gotoPage=<c:out value="${sessionScope.previous}"/>">Previous</a>
+</c:if>
+<c:if test="${sessionScope.next != null}">
+    <a href="administration?gotoPage=<c:out value="${sessionScope.next}"/>">Next</a>
+</c:if>
 
 <!--===============================================================================================-->
 <script src="ui/administration-page-resources/vendor/jquery/jquery-3.2.1.min.js"></script>

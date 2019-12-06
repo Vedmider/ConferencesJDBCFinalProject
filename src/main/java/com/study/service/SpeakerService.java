@@ -86,38 +86,38 @@ public class SpeakerService implements DBActionsService {
     private Speaker mapSpeakerFromParams(Map<String, String> params) {
         Speaker speaker;
 
-        if (params.get("id") != null) {
+        if (params.get("id") != null && !params.get("id").equals("") ) {
             speaker = speakerDAO.getById(Integer.parseInt(params.get("id")));
         } else {
             speaker = new Speaker();
         }
 
-        if (params.get("login") != null) {
+        if (params.get("login") != null && !params.get("login").equals("")) {
             speaker.setLogin(params.get("login"));
         }
-        if (params.get("password") != null) {
+        if (params.get("password") != null && !params.get("password").equals("")) {
             speaker.setPassword(params.get("password"));
         }
-        if (params.get("firstName") != null) {
+        if (params.get("firstName") != null && !params.get("firstName").equals("")) {
             speaker.setFirstName(params.get("firstName"));
         }
-        if (params.get("lastName") != null) {
+        if (params.get("lastName") != null && !params.get("lastName").equals("")) {
             speaker.setLastName(params.get("lastName"));
         }
-        if (params.get("email") != null) {
+        if (params.get("email") != null && !params.get("email").equals("")) {
             speaker.setEmail(params.get("email"));
         }
-        if (params.get("userRole") != null) {
+        if (params.get("userRole") != null && !params.get("userRole").equals("")) {
             speaker.setUserRole(Integer
                     .parseInt(params
                             .get("userRole")));
         }
-        if (params.get("rating") != null) {
+        if (params.get("rating") != null && !params.get("rating").equals("")) {
             speaker.setRating(Integer
                     .parseInt(params
                             .get("rating")));
         }
-        if (params.get("bonuses") != null){
+        if (params.get("bonuses") != null && !params.get("bonuses").equals("")){
             speaker.setBonuses(Integer
                     .parseInt(params
                             .get("bonuses")));
@@ -126,4 +126,16 @@ public class SpeakerService implements DBActionsService {
         return speaker;
     }
 
+    public List<SpeakerDTO> getAllSpeakers(int startPosition, int limit) {
+        List<Speaker> speakers = speakerDAO.getAll(startPosition, limit);
+        if (speakers.isEmpty()) {
+            LOG.info("Get empty list from database");
+        } else {
+            return speakers
+                    .stream()
+                    .map(speaker -> convertEntityToDTO(speaker))
+                    .collect(Collectors.toList());
+        }
+        return Collections.EMPTY_LIST;
+    }
 }

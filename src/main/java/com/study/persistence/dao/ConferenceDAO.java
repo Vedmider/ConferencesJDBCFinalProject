@@ -16,6 +16,7 @@ public class ConferenceDAO extends AbstractDao<Conference> {
     private static final String DELETE_FROM_CONFERENCES = "DELETE FROM conferences WHERE id = ?";
     private static final String SELECT_FROM_CONFERENCES = "SELECT * FROM conferences WHERE id = ";
     private static final String SELECT_ALL_CONFERENCE_REPORTS = "SELECT * FROM reports WHERE conference_id = ";
+    private static final String SELECT_ALL_CONDITIONAL_FROM_CONFERENCES = "SELECT * FROM conferences ORDER BY id LIMIT ";
     private static final ReportDAO reportDAO = new ReportDAO();
 
 
@@ -89,6 +90,19 @@ public class ConferenceDAO extends AbstractDao<Conference> {
             report.setAttended(resultSet.getInt("attended"));
             report.setRegistered(resultSet.getInt("registered"));
             return report;
+        });
+    }
+
+    public List<Conference> getAll(int  startPosition, int limit ) {
+        return selectFromDB(SELECT_ALL_CONDITIONAL_FROM_CONFERENCES + startPosition + ", " + limit, resultSet -> {
+            Conference conference = new Conference();
+            conference.setId(resultSet.getInt("id"));
+            conference.setTheme(resultSet.getString("theme"));
+            conference.setPlannedDateTime(resultSet.getTimestamp("date_time_planned").toLocalDateTime());
+            LocalDateTime time  = resultSet.getTimestamp("date_time_happened").toLocalDateTime();
+            conference.setHappenedDateTime(resultSet.wasNull() ? null : time);
+            conference.setAddress(resultSet.getString("address"));
+            return conference;
         });
     }
 }

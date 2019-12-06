@@ -142,34 +142,40 @@ public class UserService implements DBActionsService {
     private User mapUserFromParams(Map<String, String> params) {
         User user;
 
-        if (params.get("id") != null) {
+        if (params.get("id") != null && !params.get("id").equals("")) {
             LOG.info("Setting User ID to {}", params.get("id"));
             user = userDAO.getById(Integer.parseInt(params.get("id")));
         } else {
             user = new User();
         }
 
-        if (params.get("login") != null) {
+        if (params.get("login") != null && !params.get("login").equals("")) {
             user.setLogin(params.get("login"));
         }
-        if (params.get("password") != null) {
+        if (params.get("password") != null && !params.get("password").equals("")) {
             user.setPassword(params.get("password"));
         }
-        if (params.get("firstName") != null) {
+        if (params.get("firstName") != null && !params.get("firstName").equals("")) {
             user.setFirstName(params.get("firstName"));
         }
-        if (params.get("lastName") != null) {
+        if (params.get("lastName") != null && !params.get("lastName").equals("")) {
             user.setLastName(params.get("lastName"));
         }
-        if (params.get("email") != null) {
+        if (params.get("email") != null && !params.get("email").equals("")) {
             user.setEmail(params.get("email"));
         }
-        if (params.get("userRole") != null) {
+        if (params.get("userRole") != null && !params.get("userRole").equals("")) {
             user.setUserRole(Integer
                     .parseInt(params
                             .get("userRole")));
         }
 
         return user;
+    }
+
+    public List<UserDTO> getAll(int startPosition, int limit) {
+        return userDAO.getAll(startPosition, limit).stream()
+                .map(user -> EntityDTOMapper.mapUser(user, roleDAO.getById(user.getUserRole()), roleDAO.getRoleRights(user.getUserRole())))
+                .collect(Collectors.toList());
     }
 }
