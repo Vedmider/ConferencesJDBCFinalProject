@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,13 +52,13 @@ public abstract class AbstractDao<T> implements CRUDInterface<T> {
 
     public int create(String query, StatementMapper statementMapper) {
         int result = -1;
-        try (PreparedStatement preparedStatement = DataSourceFactory.getConnection().prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = DataSourceFactory.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statementMapper.map(preparedStatement);
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
 
             while (resultSet.next()) {
-                result = resultSet.getInt("id");
+                result = resultSet.getInt(1);
             }
         } catch (SQLException e) {
             LOG.error("Could not create entity!!", e);

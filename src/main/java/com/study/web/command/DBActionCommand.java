@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.study.web.constant.PathConstants.ADMINISTRATION_PAGE;
+import static com.study.web.constant.PathConstants.SLASH_ADMINISTRATION;
 
 public class DBActionCommand implements Command {
     private static final Logger LOG = LoggerFactory.getLogger(DBActionCommand.class);
@@ -24,7 +25,7 @@ public class DBActionCommand implements Command {
     public Page perform(HttpServletRequest request) {
 
         performDBAction(request);
-        return new Page(ADMINISTRATION_PAGE);
+        return new Page(SLASH_ADMINISTRATION, true);
     }
 
     private void performDBAction(HttpServletRequest request) {

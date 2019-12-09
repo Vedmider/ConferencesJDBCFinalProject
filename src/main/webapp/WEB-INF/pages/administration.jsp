@@ -2,6 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
+<% request.setCharacterEncoding("UTF-8"); %>
 <%@ page isELIgnored="false" %>
 <%@ page session="true" %>
 
@@ -11,7 +12,8 @@
 <html lang="${sessionScope.locale}">
 <head>
     <title><fmt:message key="header.administration"/></title>
-    <meta charset="UTF-8">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="${pageContext.request.contextPath}/">
     <!--===============================================================================================-->
@@ -32,7 +34,8 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="ui/administration-page-resources/css/util.css">
     <link rel="stylesheet" type="text/css" href="ui/administration-page-resources/css/main.css">
-    <link type="text/css" rel="stylesheet" href="css/tail.datetime-default-green.css" />
+    <link rel="stylesheet" href="ui/foopicker-master/css/foopicker.css">
+    <link rel="stylesheet" href="ui/js-timepicker-master/js-timepicker.css">
     <!--===============================================================================================-->
 </head>
 <body>
@@ -98,19 +101,15 @@
                             <label for="theme">Theme</label>
                             <input type="text" name="theme" id="theme" value="">
                             <label for="plannedDate">Planned date</label>
-                            <input type="date" name="plannedDate" id="plannedDate" value=""/>
-                            <div>
+                            <input type="text" name="plannedDate" id="plannedDate" value="" re/>
                             <label for="plannedTime">Planned time</label>
-                            <input type="time"  name="plannedTime" id="plannedTime" value=""/>
-                            </div>
-                            <div>
+                            <input type="text"  name="plannedTime" id="plannedTime" value=""/>
                             <label for="happenedDate">Happened date</label>
-                            <input type="date" name="happenedDate" id="happenedDate" value="">
-                            </div>
-                            <div>
+                            <input type="text" name="happenedDate" id="happenedDate" value="">
                             <label for="happenedTime">Happened time</label>
-                            <input type="time" name="happenedTime" id="happenedTime"/>
-                            </div>
+                            <input type="text" name="happenedTime" id="happenedTime"/>
+                            <label for="address">Address</label>
+                            <input type="text" name="address" id="address"/>
                             <label for="type">Type of operation</label>
                             <select name="type" id="type" required>
                                 <option value="create">Create</option>
@@ -189,7 +188,7 @@
                         <label for="title">Title</label>
                         <input type="text" name="title" id="title" value="">
                         <label for="timeStart">Start time</label>
-                        <input type="time" name="timeStart" id="timeStart" value="">
+                        <input type="text" name="timeStart" id="timeStart" value="">
                         <label for="speaker">Speaker ID</label>
                         <input type="text" name="speaker" id="speaker" value="">
                         <label for="registered">Number of registered</label>
@@ -394,8 +393,8 @@
 <script src="ui/administration-page-resources/vendor/select2/select2.min.js"></script>
 <!--===============================================================================================-->
 <script src="ui/administration-page-resources/js/main.js"></script>
-<script src="ui/js/jquery.maskedinput.min.js"></script>
-<script type="text/javascript" src="js/tail.datetime.min.js"></script>
+<script src="ui/foopicker-master/foopicker.js"></script>
+<script src="ui/js-timepicker-master/js-timepicker.js"></script>
 <script type="text/javascript">
 
     function conferenceValidate() {
@@ -509,6 +508,27 @@
         return true;
     }
 
+    let foopicker = new FooPicker({
+        id: 'plannedDate',
+        dateFormat: 'dd/MM/yyyy'
+    });
+
+    let foopicker1 = new FooPicker({
+        id: 'happenedDate',
+        dateFormat: 'dd/MM/yyyy'
+    });
+
+    window.picker = new JsTimepicker(document.querySelector('[name="plannedTime"]'), {
+        // options here
+    });
+
+    window.picker = new JsTimepicker(document.querySelector('[name="happenedTime"]'), {
+        // options here
+    });
+
+    window.picker = new JsTimepicker(document.querySelector('[name="timeStart"]'), {
+        // options here
+    });
 </script>
 
 </body>
