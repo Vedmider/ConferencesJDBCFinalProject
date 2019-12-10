@@ -1,4 +1,4 @@
-package com.study.persistence.DTO;
+package com.study.web.DTO;
 
 import java.util.Objects;
 
@@ -77,12 +77,12 @@ public class UserDTO {
     public boolean equals(final Object obj){
         if(obj instanceof UserDTO){
             final UserDTO other = (UserDTO) obj;
-            return Objects.equals(role, other.role)
-                    && login == other.login
-                    && password == other.password
-                    && firstName == other.firstName
-                    && lastName == other.lastName
-                    && email == other.email;
+            return Objects.deepEquals(role, other.getRole())
+                    && Objects.equals(login, other.getLogin())
+                    && Objects.equals(password,other.getPassword())
+                    && Objects.equals(firstName, other.getFirstName())
+                    && Objects.equals(lastName, other.getLastName())
+                    && Objects.equals(email, other.getEmail());
         } else{
             return false;
         }

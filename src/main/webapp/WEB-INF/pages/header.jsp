@@ -1,4 +1,3 @@
-<%@ page import="java.util.Enumeration" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
@@ -11,6 +10,7 @@
 
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <base href="${pageContext.request.contextPath}/">
 </head>
 <body>
@@ -29,8 +29,10 @@
                     <ul class="nav navbar-nav menu_nav ml-auto">
                         <li class="nav-item active"><a class="nav-link" href="index"><fmt:message key="header.home"/></a></li>
                         <li class="nav-item"><a class="nav-link" href="about"><fmt:message key="header.about"/></a></li>
-                        <c:if test="${sessionScope.user != null}">
+                        <c:if test="${sessionScope.user != null && sessionScope.role == 'USER'}">
                         <li class="nav-item"><a class="nav-link" href="speakers"><fmt:message key="header.speakers"/></a>
+                            </c:if>
+                        <c:if test="${sessionScope.user != null && (sessionScope.role == 'ADMIN' || sessionScope.role == 'MODERATOR' || sessionScope.role == 'SPEAKER')}">
                         <li class="nav-item"><a class="nav-link" href="administration"><fmt:message key="header.administration"/></a>
                         </c:if>
                         <c:if test="${sessionScope.user == null}">

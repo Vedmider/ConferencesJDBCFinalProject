@@ -2,13 +2,14 @@ package com.study.persistence.dao;
 
 import com.study.persistence.entity.Conference;
 import com.study.persistence.entity.Report;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class ConferenceDAO extends AbstractDao<Conference> {
-    private static final String COUNT_ROWS = "SELECT COUNT(1) FROM conferences";
+    private static final Logger LOG = LoggerFactory.getLogger(ConferenceDAO.class);
     private static final String SELECT_ALL_FROM_CONFERENCES = "SELECT * FROM conferences";
     private static final String INSERT_INTO_CONFERENCES = "INSERT INTO conferences(theme, date_time_planned, date_time_happened, address) "
             + "VALUE (?,?,?,?)";
@@ -18,6 +19,7 @@ public class ConferenceDAO extends AbstractDao<Conference> {
     private static final String DELETE_FROM_CONFERENCES = "DELETE FROM conferences WHERE id = ?";
     private static final String SELECT_FROM_CONFERENCES = "SELECT * FROM conferences WHERE id = ";
     private static final String SELECT_ALL_CONFERENCE_REPORTS = "SELECT * FROM reports WHERE conference_id = ";
+    private static final String SELECT_ALL_CONDITIONAL_FROM_CONFERENCES = "SELECT * FROM conferences ORDER BY id LIMIT ";
     private static final ReportDAO reportDAO = new ReportDAO();
 
 
@@ -28,8 +30,9 @@ public class ConferenceDAO extends AbstractDao<Conference> {
             conference.setId(id);
             conference.setTheme(resultSet.getString("theme"));
             conference.setPlannedDateTime(resultSet.getTimestamp("date_time_planned").toLocalDateTime());
-            LocalDateTime time  = resultSet.getTimestamp("date_time_happened").toLocalDateTime();
-            conference.setHappenedDateTime(resultSet.wasNull() ? null : time);
+            if (resultSet.getTimestamp("date_time_happened") != null) {
+                conference.setHappenedDateTime(resultSet.getTimestamp("date_time_happened").toLocalDateTime());
+            }
             conference.setAddress(resultSet.getString("address"));
             return conference;
         }).get(0);
@@ -38,15 +41,16 @@ public class ConferenceDAO extends AbstractDao<Conference> {
     @Override
     public List<Conference> getAll() {
         return selectFromDB(SELECT_ALL_FROM_CONFERENCES, resultSet -> {
-                Conference conference = new Conference();
-                conference.setId(resultSet.getInt("id"));
-                conference.setTheme(resultSet.getString("theme"));
-                conference.setPlannedDateTime(resultSet.getTimestamp("date_time_planned").toLocalDateTime());
-                LocalDateTime time  = resultSet.getTimestamp("date_time_happened").toLocalDateTime();
-                conference.setHappenedDateTime(resultSet.wasNull() ? null : time);
-                conference.setAddress(resultSet.getString("address"));
-                return conference;
-            });
+            Conference conference = new Conference();
+            conference.setId(resultSet.getInt("id"));
+            conference.setTheme(resultSet.getString("theme"));
+            conference.setPlannedDateTime(resultSet.getTimestamp("date_time_planned").toLocalDateTime());
+            if (resultSet.getTimestamp("date_time_happened") != null) {
+                conference.setHappenedDateTime(resultSet.getTimestamp("date_time_happened").toLocalDateTime());
+            }
+            conference.setAddress(resultSet.getString("address"));
+            return conference;
+        });
     }
 
     @Override
@@ -59,6 +63,8 @@ public class ConferenceDAO extends AbstractDao<Conference> {
         return create(INSERT_INTO_CONFERENCES, preparedStatement -> {
             preparedStatement.setString(1, entity.getTheme());
             preparedStatement.setObject(2, entity.getPlannedDateTime());
+            preparedStatement.setObject(3, entity.getHappenedDateTime());
+            preparedStatement.setString(4, entity.getAddress());
         });
     }
 
@@ -75,12 +81,20 @@ public class ConferenceDAO extends AbstractDao<Conference> {
 
     @Override
     public boolean delete(Conference entity) {
-        return update(DELETE_FROM_CONFERENCES, preparedStatement -> {
+        LOG.info("Delete parameters - entity ID: {}", entity.getId());
+        boolean success = update(DELETE_FROM_CONFERENCES, preparedStatement -> {
             preparedStatement.setInt(1, entity.getId());
         });
+        if (!success){
+            LOG.info("Deletion by ID {} was unsuccessful", entity.getId());
+        } else {
+            LOG.info("Successfully deleted");
+        }
+        return success;
     }
 
-    public List<Report> getAllReports(int id){
+    public List<Report> getAllReports(int id) {
+        LOG.info("Get all reports to Conference ID: " + id);
         return reportDAO.getAllConditional(SELECT_ALL_CONFERENCE_REPORTS + id, resultSet -> {
             Report report = new Report();
             report.setId(resultSet.getInt("id"));
@@ -91,6 +105,20 @@ public class ConferenceDAO extends AbstractDao<Conference> {
             report.setAttended(resultSet.getInt("attended"));
             report.setRegistered(resultSet.getInt("registered"));
             return report;
+        });
+    }
+
+    public List<Conference> getAll(int startPosition, int limit) {
+        return selectFromDB(SELECT_ALL_CONDITIONAL_FROM_CONFERENCES + startPosition + ", " + limit, resultSet -> {
+            Conference conference = new Conference();
+            conference.setId(resultSet.getInt("id"));
+            conference.setTheme(resultSet.getString("theme"));
+            conference.setPlannedDateTime(resultSet.getTimestamp("date_time_planned").toLocalDateTime());
+            if (resultSet.getTimestamp("date_time_happened") != null) {
+                conference.setHappenedDateTime(resultSet.getTimestamp("date_time_happened").toLocalDateTime());
+            }
+            conference.setAddress(resultSet.getString("address"));
+            return conference;
         });
     }
 }

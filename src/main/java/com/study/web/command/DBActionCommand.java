@@ -1,18 +1,16 @@
 package com.study.web.command;
 
-import com.study.persistence.entity.Conference;
 import com.study.service.*;
 import com.study.web.data.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.study.web.constant.PathConstants.ADMINISTRATION_PAGE;
+import static com.study.web.constant.PathConstants.SLASH_ADMINISTRATION;
 
 public class DBActionCommand implements Command {
     private static final Logger LOG = LoggerFactory.getLogger(DBActionCommand.class);
@@ -26,7 +24,7 @@ public class DBActionCommand implements Command {
     public Page perform(HttpServletRequest request) {
 
         performDBAction(request);
-        return new Page(ADMINISTRATION_PAGE);
+        return new Page(SLASH_ADMINISTRATION, true);
     }
 
     private void performDBAction(HttpServletRequest request) {
@@ -49,12 +47,16 @@ public class DBActionCommand implements Command {
 
     private DBActionsService getService(String serviceType) {
         if (serviceType.equalsIgnoreCase("conference")) {
+            LOG.info("Returning administration Service in DB Action Command");
             return administrationService;
         } else if (serviceType.equalsIgnoreCase("report")) {
+            LOG.info("Returning report Service in DB Action Command");
             return reportService;
         } else if (serviceType.equalsIgnoreCase("user")) {
+            LOG.info("Returning user Service in DB Action Command");
             return userService;
         } else if (serviceType.equalsIgnoreCase("speaker")) {
+            LOG.info("Returning speaker Service in DB Action Command");
             return speakerService;
         }
         return null;

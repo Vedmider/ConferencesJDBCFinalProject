@@ -7,11 +7,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Properties;
 
 public class DataSourceFactory {
     private static final Logger LOG = LoggerFactory.getLogger(DataSourceFactory.class);
@@ -44,10 +42,6 @@ public class DataSourceFactory {
         }
 
         return connection;
-    }
-
-    public static PreparedStatement getPreparedStatement (String query) throws SQLException {
-        return getConnection().prepareStatement(query);
     }
 
 }

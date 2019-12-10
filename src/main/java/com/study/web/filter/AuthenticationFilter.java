@@ -1,6 +1,6 @@
 package com.study.web.filter;
 
-import com.study.persistence.DTO.UserDTO;
+import com.study.web.DTO.UserDTO;
 import com.study.web.config.SecurityConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static com.study.web.constant.PathConstants.*;
+import static com.study.web.constant.PathConstants.SLASH_FORBIDDEN;
+import static com.study.web.constant.PathConstants.SLASH_LOGIN;
 
 public class AuthenticationFilter implements Filter {
     private static final Logger LOG = LoggerFactory.getLogger(AuthenticationFilter.class);

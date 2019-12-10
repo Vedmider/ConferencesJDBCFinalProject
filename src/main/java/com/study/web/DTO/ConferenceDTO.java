@@ -1,7 +1,8 @@
-package com.study.persistence.DTO;
+package com.study.web.DTO;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 public class ConferenceDTO {
     private int id;
@@ -57,5 +58,25 @@ public class ConferenceDTO {
 
     public void setReports(List<ReportDTO> reports) {
         this.reports = reports;
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(id, theme, address, happenedDateTime, plannedDateTime, reports);
+    }
+
+    @Override
+    public boolean equals(final Object obj){
+        if(obj instanceof ConferenceDTO){
+            final ConferenceDTO other = (ConferenceDTO) obj;
+            return Objects.deepEquals(reports, other.getId())
+                    && id == other.getId()
+                    && Objects.equals(theme,other.getTheme())
+                    && Objects.equals(plannedDateTime, other.getPlannedDateTime())
+                    && Objects.equals(happenedDateTime, other.getHappenedDateTime())
+                    && Objects.equals(address, other.getAddress());
+        } else{
+            return false;
+        }
     }
 }

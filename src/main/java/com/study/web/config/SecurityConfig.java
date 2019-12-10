@@ -3,8 +3,7 @@ package com.study.web.config;
 import java.util.*;
 
 import static com.study.web.constant.ContentConstants.*;
-import static com.study.web.constant.PathConstants.SLASH_ADMINISTRATION;
-import static com.study.web.constant.PathConstants.SLASH_SPEAKERS;
+import static com.study.web.constant.PathConstants.*;
 
 public class SecurityConfig {
 

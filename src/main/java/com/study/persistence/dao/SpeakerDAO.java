@@ -9,8 +9,9 @@ import java.util.List;
 public class SpeakerDAO extends AbstractDao<Speaker> {
     private static final Logger LOG = LoggerFactory.getLogger(SpeakerDAO.class);
     private static final String SELECT_ALL_FROM_SPEAKER = "SELECT * FROM users u JOIN speaker s on u.id = s.user_id";
+    private static final String SELECT_ALL_LIMITED_FROM_SPEAKER = "SELECT * FROM  users u JOIN speaker s on u.id = s.user_id LIMIT ";
     private static final String SELECT_FROM_SPEAKER = "SELECT * FROM users u JOIN speaker s on u.id = s.user_id WHERE s.user_id = ";
-    private static final String INSERT_INTO_SPEAKER = "INSERT INTO speaker(rating, bonuses)  VALUE (?, ?)";
+    private static final String INSERT_INTO_SPEAKER = "INSERT INTO speaker(rating, bonuses, user_id)  VALUE (?, ?, ?)";
     private static final String UPDATE_SPEAKER = "UPDATE speaker SET rating = ?, bonuses = ? WHERE user_id = ?";
     private static final String DELETE_SPEAKER = "DELETE FROM speaker WHERE user_id = ?";
 
@@ -63,6 +64,7 @@ public class SpeakerDAO extends AbstractDao<Speaker> {
         return create(INSERT_INTO_SPEAKER, preparedStatement -> {
             preparedStatement.setInt(1, entity.getRating());
             preparedStatement.setInt(2, entity.getBonuses());
+            preparedStatement.setInt(3, entity.getId());
         });
     }
 
@@ -81,6 +83,23 @@ public class SpeakerDAO extends AbstractDao<Speaker> {
         LOG.info("Deleting Speaker entity ID {}", entity.getId());
         return update(DELETE_SPEAKER, preparedStatement -> {
             preparedStatement.setInt(1, entity.getId());
+        });
+    }
+
+    public List<Speaker> getAll(int startPosition, int limit) {
+        LOG.info("Getting Speaker all entity from DB");
+        return selectFromDB(SELECT_ALL_LIMITED_FROM_SPEAKER + startPosition + ", " + limit, resultSet -> {
+            Speaker speaker = new Speaker();
+            speaker.setLogin(resultSet.getString("login"));
+            speaker.setPassword(resultSet.getString("user_password"));
+            speaker.setFirstName(resultSet.getString("first_name"));
+            speaker.setLastName(resultSet.getString("last_name"));
+            speaker.setEmail(resultSet.getString("email"));
+            speaker.setUserRole(resultSet.getInt("user_role"));
+            speaker.setRating(resultSet.getInt("rating"));
+            speaker.setBonuses(resultSet.getInt("bonuses"));
+            speaker.setId(resultSet.getInt("id"));
+            return speaker;
         });
     }
 }
