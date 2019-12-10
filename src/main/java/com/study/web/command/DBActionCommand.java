@@ -10,7 +10,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.study.web.constant.PathConstants.ADMINISTRATION_PAGE;
 import static com.study.web.constant.PathConstants.SLASH_ADMINISTRATION;
 
 public class DBActionCommand implements Command {

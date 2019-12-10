@@ -45,7 +45,7 @@ public class ReportService implements DBActionsService {
         return reportDAO.create(report);
     }
 
-    public boolean updateReport (Report report){
+    public boolean updateReport(Report report) {
         LOG.info("Start updating report");
         return reportDAO.update(report);
     }
@@ -102,7 +102,10 @@ public class ReportService implements DBActionsService {
                     .parseInt(params
                             .get("speakerId")));
         }
-        report.setConferenceId(Integer.parseInt(params.get("conferenceId")));
+        if (params.get("conferenceId") != null && !params.get("conferenceId").equals("")) {
+            report.setConferenceId(Integer.parseInt(params.get("conferenceId")));
+        }
+
         if (params.get("registered") != null && !params.get("registered").equals("")) {
             report.setRegistered(Integer
                     .parseInt(params
@@ -119,14 +122,18 @@ public class ReportService implements DBActionsService {
 
     private String[] getTimeFromParameter(String timeParameter) {
         String[] time;
-        SimpleDateFormat date12Format = new SimpleDateFormat("hh:mm a");
-        SimpleDateFormat date24Format = new SimpleDateFormat("HH:mm");
-        try {
-            time = date24Format.format(date12Format.parse(timeParameter)).trim().split(":");
-        } catch (ParseException e) {
-            time = new String[]{"00", "00"};
-            LOG.error("Could not parse time parameter", e);
+        if (timeParameter.contains("AM") || timeParameter.contains("PM")) {
+            SimpleDateFormat date12Format = new SimpleDateFormat("hh:mm a");
+            SimpleDateFormat date24Format = new SimpleDateFormat("HH:mm");
+            try {
+                time = date24Format.format(date12Format.parse(timeParameter)).trim().split(":");
+            } catch (ParseException e) {
+                time = new String[]{"00", "00"};
+                LOG.error("Could not parse time parameter", e);
+            }
+            return time;
         }
+        time = timeParameter.trim().split("\\D");
         return time;
     }
 }

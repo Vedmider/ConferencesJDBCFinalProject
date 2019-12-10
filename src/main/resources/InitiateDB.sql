@@ -49,3 +49,4 @@ insert into conferences(theme, date_time_planned, date_time_happened, address)
     values('devoxx ukraine 2019', '2019-10-01 10:00', '2019-10-01 10:00', 'Kyiv, Mezhyhirska St, 82, Event space M82');
 insert into reports (title, time_start, speaker_id, conference_id, registered)
     VALUE ('Methodology & Culture', '10:10:00', (select id from users where login like 'speaker'), (select id from conferences where theme rlike '(?i)\\s*devoxx\\s+ukraine\\s+2019\\s*'), 50 );
+

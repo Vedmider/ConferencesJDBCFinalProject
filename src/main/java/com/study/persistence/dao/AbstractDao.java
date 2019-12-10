@@ -3,10 +3,7 @@ package com.study.persistence.dao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +14,9 @@ public abstract class AbstractDao<T> implements CRUDInterface<T> {
 
     public List<T> selectFromDB(String query, EntityMapper<T> mapper) {
         List<T> result = new ArrayList<>();
-
-        try (PreparedStatement preparedStatement = DataSourceFactory.getConnection().prepareStatement(query);
+        LOG.info("Select query is " + query);
+        try (Connection connection = DataSourceFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
@@ -36,7 +34,8 @@ public abstract class AbstractDao<T> implements CRUDInterface<T> {
 
 
     public boolean update(String query, StatementMapper statementMapper) {
-        try (PreparedStatement preparedStatement = DataSourceFactory.getConnection().prepareStatement(query)) {
+        try (Connection connection = DataSourceFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);) {
             statementMapper.map(preparedStatement);
 
             int result = preparedStatement.executeUpdate();
@@ -52,7 +51,8 @@ public abstract class AbstractDao<T> implements CRUDInterface<T> {
 
     public int create(String query, StatementMapper statementMapper) {
         int result = -1;
-        try (PreparedStatement preparedStatement = DataSourceFactory.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection connection = DataSourceFactory.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statementMapper.map(preparedStatement);
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();

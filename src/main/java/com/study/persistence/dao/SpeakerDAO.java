@@ -11,7 +11,7 @@ public class SpeakerDAO extends AbstractDao<Speaker> {
     private static final String SELECT_ALL_FROM_SPEAKER = "SELECT * FROM users u JOIN speaker s on u.id = s.user_id";
     private static final String SELECT_ALL_LIMITED_FROM_SPEAKER = "SELECT * FROM  users u JOIN speaker s on u.id = s.user_id LIMIT ";
     private static final String SELECT_FROM_SPEAKER = "SELECT * FROM users u JOIN speaker s on u.id = s.user_id WHERE s.user_id = ";
-    private static final String INSERT_INTO_SPEAKER = "INSERT INTO speaker(rating, bonuses)  VALUE (?, ?)";
+    private static final String INSERT_INTO_SPEAKER = "INSERT INTO speaker(rating, bonuses, user_id)  VALUE (?, ?, ?)";
     private static final String UPDATE_SPEAKER = "UPDATE speaker SET rating = ?, bonuses = ? WHERE user_id = ?";
     private static final String DELETE_SPEAKER = "DELETE FROM speaker WHERE user_id = ?";
 
@@ -64,6 +64,7 @@ public class SpeakerDAO extends AbstractDao<Speaker> {
         return create(INSERT_INTO_SPEAKER, preparedStatement -> {
             preparedStatement.setInt(1, entity.getRating());
             preparedStatement.setInt(2, entity.getBonuses());
+            preparedStatement.setInt(3, entity.getId());
         });
     }
 

@@ -17,6 +17,7 @@ public class SpeakerService implements DBActionsService {
     private static final Logger LOG = LoggerFactory.getLogger(SpeakerService.class);
     private static final SpeakerDAO speakerDAO = new SpeakerDAO();
     private static final RoleDAO roleDao = new RoleDAO();
+    private static final UserService userService = new UserService();
 
     public List<SpeakerDTO> getAllSpeakers() {
         List<Speaker> speakers = speakerDAO.getAll();
@@ -41,6 +42,7 @@ public class SpeakerService implements DBActionsService {
     }
 
     public int createSpeaker(Speaker speaker) {
+        speaker.setId(userService.createUser(speaker));
         return speakerDAO.create(speaker);
     }
 
@@ -86,7 +88,7 @@ public class SpeakerService implements DBActionsService {
     private Speaker mapSpeakerFromParams(Map<String, String> params) {
         Speaker speaker;
 
-        if (params.get("id") != null && !params.get("id").equals("") ) {
+        if (params.get("id") != null && !params.get("id").equals("")) {
             speaker = speakerDAO.getById(Integer.parseInt(params.get("id")));
         } else {
             speaker = new Speaker();
@@ -111,13 +113,15 @@ public class SpeakerService implements DBActionsService {
             speaker.setUserRole(Integer
                     .parseInt(params
                             .get("userRole")));
+        } else {
+            speaker.setUserRole(4);
         }
         if (params.get("rating") != null && !params.get("rating").equals("")) {
             speaker.setRating(Integer
                     .parseInt(params
                             .get("rating")));
         }
-        if (params.get("bonuses") != null && !params.get("bonuses").equals("")){
+        if (params.get("bonuses") != null && !params.get("bonuses").equals("")) {
             speaker.setBonuses(Integer
                     .parseInt(params
                             .get("bonuses")));

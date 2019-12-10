@@ -95,7 +95,7 @@
                     </c:forEach>
                     <c:if test="${sessionScope.role == 'ADMIN'}">
                         Create/Update Conference
-                        <form action="db-action" id="db-action-form" onsubmit="return conferenceValidate()">
+                        <form action="db-action" id="db-action-form" onsubmit="return conferenceValidate()" method="post">
                             <label for="id">ID</label>
                             <input type="text" name="id" id="id" value="">
                             <label for="theme">Theme</label>
@@ -123,6 +123,7 @@
                 </div>
             </div>
             <c:forEach items="${sessionScope.conferences}" var="conference">
+                <c:if test="${not empty conference.reports}">
                 <h3>Conference: <c:out value="${conference.theme}"/></h3>
                 <h3>Reports</h3>
                 <div class="wrap-table100">
@@ -180,36 +181,48 @@
                         </div>
                     </c:forEach>
                 </div>
-                <c:if test="${sessionScope.role == 'ADMIN'}">
-                    Create/Update Report
-                    <form action="db-action" id="db-action-form" onsubmit="return reportValidate()">
-                        <label for="id">ID</label>
-                        <input type="text" name="id" id="report-id" value="">
-                        <label for="title">Title</label>
-                        <input type="text" name="title" id="title" value="">
-                        <label for="timeStart">Start time</label>
-                        <input type="text" name="timeStart" id="timeStart" value="">
-                        <label for="speaker">Speaker ID</label>
-                        <input type="text" name="speaker" id="speaker" value="">
-                        <label for="registered">Number of registered</label>
-                        <input type="number" name="registered" id="registered" value="">
-                        <label for="attended">Number of attended</label>
-                        <input type="number" name="attended" id="attended" value="">
-                        <input type="number" name="conferenceId" id="conferenceId" value="" hidden>
-                        <label for="type">Type of operation</label>
-                        <select name="type" id="report-operation-type" required>
-                            <option value="create">Create</option>
-                            <option value="update">Update</option>
-                        </select>
-                        <input type="text" name="entity" value="report" hidden>
-                        <input type="submit" id="report-submit" value="Submit">
-                    </form>
-                    <br>
                 </c:if>
             </c:forEach>
+            <c:if test="${sessionScope.role == 'ADMIN'}">
+                Create/Update Report
+                <form action="db-action" id="db-action-form" onsubmit="return reportValidate()" method="post">
+                    <label for="id">ID</label>
+                    <input type="text" name="id" id="report-id" value="">
+                    <label for="title">Title</label>
+                    <input type="text" name="title" id="title" value="">
+                    <label for="timeStart">Start time</label>
+                    <input type="text" name="timeStart" id="timeStart" value="">
+                    <label for="speakerId">Speaker ID</label>
+                    <select type="text" name="speakerId" id="speakerId" required>
+                        <c:forEach items="${sessionScope.speakers}" var="speaker">
+                        <option value="${speaker.id}"><c:set var="fullName" value="${speaker.firstName}  ${speaker.lastName}"/>
+                            <c:out value="${fullName}"/></option>
+                        </c:forEach>
+                    </select>
+                    <label for="registered">Number of registered</label>
+                    <input type="number" name="registered" id="registered" value="">
+                    <label for="attended">Number of attended</label>
+                    <input type="number" name="attended" id="attended" value="">
+                    <label for="conferenceId">Conference</label>
+                    <select name="conferenceId" id="conferenceId" required>
+                        <c:forEach items="${sessionScope.conferences}" var="conference">
+                            <option value="${conference.id}"><c:out value="${conference.theme}"/></option>
+                        </c:forEach>
+                    </select>
+                    <label for="type">Type of operation</label>
+                    <select name="type" id="report-operation-type" required>
+                        <option value="create">Create</option>
+                        <option value="update">Update</option>
+                    </select>
+                    <input type="text" name="entity" value="report" hidden>
+                    <input type="submit" id="report-submit" value="Submit">
+                </form>
+                <br>
+            </c:if>
             </div>
-
         </c:if>
+
+        <h3>Speakers</h3>
         <c:if test="${sessionScope.speakers != null}">
             <div class="wrap-table100">
                 <div class="table">
@@ -254,7 +267,7 @@
             </div>
             <c:if test="${sessionScope.role == 'ADMIN' || sessionScope.role == 'MODERATOR'}">
                 Create/Update Speaker
-                <form action="db-action" id="db-action-form" onsubmit="return speakerValidate()">
+                <form action="db-action" id="db-action-form" onsubmit="return speakerValidate()" method="post">
                     <label for="id">ID</label>
                     <input type="text" name="id" id="speaker-id" value="">
                     <label for="login">Login</label>
@@ -267,13 +280,11 @@
                     <input type="text" name="lastName" id="lastName" value="">
                     <label for="email">Email</label>
                     <input type="email" name="email" id="email" value="">
-                    <label for="speakerRole">Role</label>
-                    <select name="userRole" id="speakerRole" required>
-                        <option value="1">ADMIN</option>
-                        <option value="3">MODERATOR</option>
-                        <option value="4">SPEAKER</option>
-                        <option value="5">USER</option>
-                    </select>
+                    <label for="rating">Rating</label>
+                    <input type="number" name="rating" id="rating" value="">
+                    <label for="bonuses">Bonuses</label>
+                    <input type="number" name="bonuses" id="bonuses" value="">
+                    <input name="userRole" id="speakerRole" value="4" hidden>
                     <label for="type">Type of operation</label>
                     <select name="type" id="speaker-operation-type" required>
                         <c:if test="${sessionScope.role == 'MODERATOR' || sessionScope.role == 'ADMIN'}">
@@ -343,7 +354,7 @@
                 </div>
                 <c:if test="${sessionScope.role == 'ADMIN'}">
                     <h3>Create/Update User</h3>
-                    <form action="db-action" id="db-action-form" onsubmit="return userValidate()">
+                    <form action="db-action" id="db-action-form" onsubmit="return userValidate()" method="post">
                         <label for="id">ID</label>
                         <input type="text" name="id" id="user-id" value="">
                         <label for="login">Login</label>
@@ -401,7 +412,8 @@
 
         let id = document.getElementById("id").value;
         let theme = document.getElementById("theme").value;
-        let plannedDateTime = document.getElementById("plannedDateTime").value;
+        let plannedDate = document.getElementById("plannedDate").value;
+        let plannedTime = document.getElementById("plannedTime").value;
         let type = document.getElementById("type").value;
 
         if (type == 'update') {
@@ -415,7 +427,7 @@
                 alert("ID cannot be filled in during create")
                 return false;
             }
-            if (theme == '' || plannedDateTime == '') {
+            if (theme == '' || plannedDate == '' || plannedTime == '') {
                 alert("Theme and planned date should not be empty")
                 return false;
             }
@@ -429,6 +441,8 @@
         let title = document.getElementById("title").value;
         let timeStart = document.getElementById("timeStart").value;
         let type = document.getElementById("type").value;
+        let conference = document.getElementById("conferenceId").value;
+        let speaker = document.getElementById("speakerId").value;
 
         if (type == 'update') {
             if (id == '') {
@@ -441,7 +455,7 @@
                 alert("ID cannot be filled in during create")
                 return false;
             }
-            if (title == '' || timeStart == '') {
+            if (title == '' || timeStart == '' || conference == '') {
                 alert("Title and time of start  date should not be empty")
                 return false;
             }

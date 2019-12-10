@@ -94,6 +94,7 @@ public class ConferenceDAO extends AbstractDao<Conference> {
     }
 
     public List<Report> getAllReports(int id) {
+        LOG.info("Get all reports to Conference ID: " + id);
         return reportDAO.getAllConditional(SELECT_ALL_CONFERENCE_REPORTS + id, resultSet -> {
             Report report = new Report();
             report.setId(resultSet.getInt("id"));
